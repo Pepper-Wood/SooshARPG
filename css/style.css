@@ -176,3 +176,7 @@ ul.tab li a:focus, .activeTab {
 .bg-exclusive { background-color: rgb(246,178,107); }
 .bg-quest { background-color: rgb(147,196,125); }
 .bg-lifeskills { background-color: rgb(118,165,175); }
+
+.craftingItem {
+  padding: 10px;
+}
