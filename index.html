@@ -111,38 +111,50 @@
   </div>
 
   <div id="Prompts" class="tabcontent">
-    <ul class="grid cs-style-3">
-      <li>
-        <figure>
-          <img src="img/feb17prompt.png" alt="img04">
-          <figcaption>
-            <span class="title">February 2017 - "What Is Love"<br></span>
-            Draw your Soosh impressing someone they admire<br>
-            <a target="_blank" href="http://soosharpg.deviantart.com/art/Soosh-ARPG-Prompt-Be-Back-in-a-LILY-Bit-666438758">Link to Entry</a>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="img/march17prompt.png" alt="img01">
-          <figcaption>
-            <span class="title">March 2017 - ????<br></span>
-            Draw your Soosh showing off their favorite hobby<br>
-            <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Prompt-Just-Another-Afternoon-668680405">Link to Entry</a>
-          </figcaption>
-        </figure>
-      </li>
-      <li>
-        <figure>
-          <img src="img/alchemy2.png" alt="img01">
-          <figcaption class="figcaptionSkills">
-            <span class="title">Alchemy - "Sleeping Beauty"<br></span>
-            Prepare Energy Soda<br>
-            <a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">Link to Entry</a>
-          </figcaption>
-        </figure>
-      </li>
-    </ul>
+    <div class="controls">
+      <button type="button" class="btn btn-primary control" data-filter="all">ALL</button>
+      ||
+      <button type="button" class="btn btn-prompts control" data-filter=".promptsPrompt">Prompts</button>
+      <button type="button" class="btn btn-default control" data-filter=".questsPrompt">Quests</button>
+      ||
+      <button type="button" class="btn btn-alchemy control" data-filter=".alchemyPrompt">Alchemy</button>
+      <button type="button" class="btn btn-angling control" data-filter=".anglingPrompt">Angling</button>
+      <button type="button" class="btn btn-hunting control" data-filter=".huntingPrompt">Hunting</button>
+      <button type="button" class="btn btn-gathering control" data-filter=".gatheringPrompt">Gathering</button>
+      <button type="button" class="btn btn-mining control" data-filter=".miningPrompt">Mining</button>
+      <button type="button" class="btn btn-woodcutting control" data-filter=".woodcuttingPrompt">Wood-Cutting</button>
+    </div>
+
+    <div class="promptsContainer">
+      <div class="mix promptsPrompt">
+        <a target="_blank" href="http://soosharpg.deviantart.com/art/Soosh-ARPG-Prompt-Be-Back-in-a-LILY-Bit-666438758">
+          <div class="card-image"><img src="img/feb17prompt.png"></div>
+          <div class="card-content">
+            <span class="card-title">February 2017 - "What Is Love"</span>
+          </div>
+        </a>
+      </div>
+      <div class="mix promptsPrompt">
+        <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Prompt-Just-Another-Afternoon-668680405">
+          <div class="card-image"><img src="img/march17prompt.png"></div>
+          <div class="card-content">
+            <span class="card-title">March 2017 - ????</span>
+          </div>
+        </a>
+      </div>
+      <div class="mix questsPrompt alchemyPrompt">
+        <a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">
+          <div class="card-image"><img src="img/alchemy2.png"></div>
+          <div class="card-content">
+            <span class="card-title">Alchemy - "Sleeping Beauty"</span>
+          </div>
+        </a>
+      </div>
+            
+      <div class="gap"></div>
+      <div class="gap"></div>
+      <div class="gap"></div>
+    </div>
   </div>
 
   <div id="Achievements" class="tabcontent">
@@ -325,6 +337,11 @@
     $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();   
     });
+  </script>
+  <script src="js/mixitup.min.js"></script>
+  <script>
+    var containerEl = document.querySelector('.promptsContainer');
+    var mixer = mixitup(containerEl);
   </script>
 </body>
 </html>

@@ -69,7 +69,11 @@ ul.tab li a:focus, .activeTab {
   width:100%;
 }
 
-#Bandana.tabcontent, #Prompts.tabcontent {
+#Prompts.tabcontent {
+  height:100vh;
+}
+
+#Bandana.tabcontent {
   background-color: rgba(0,0,0,0);
   border-bottom: 0px;
   border-left: 0px;
@@ -228,145 +232,415 @@ a.tt:hover span.bottom{
 /* =================================================================================== */
 
 /* =================================== PROMPTS CSS =================================== */
-.grid {
-	padding: 20px 20px 100px 20px;
-	max-width: 1300px;
-  margin: 0 auto;
-	list-style: none;
-	text-align: center;
+/* Container
+---------------------------------------------------------------------- */
+.promptsContainer {
+  padding: 1rem;
+  text-align: justify;
+  font-size: 0.1px;
 }
 
-.grid li {
-	display: inline-block;
-	width: 440px;
-	margin: 20px;
-  border: 5px solid #fff;
-	padding: 0px;
-	text-align: left;
-	position: relative;
+.promptsContainer:after {
+  content: '';
+  display: inline-block;
+  width: 100%;
 }
 
-.grid figure {
-	margin: 0;
-	position: relative;
+/* Target Elements
+---------------------------------------------------------------------- */
+div.mix {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  margin-top: 10px;
+  position: relative;
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
-.grid figure img {
-	max-width: 100%;
-	display: block;
-	position: relative;
+div.mix:hover {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.50);
+  -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.50);
+  box-shadow: 4 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.50);
 }
 
-.grid figcaption {
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 20px;
-	background: #2c3f52;
-	color: #ed4e6e;
+div .mix a { text-decoration: none; }
+
+div.mix img {
+  width: 100%;
+  height: auto;
 }
 
-.grid figcaption .title {
-	margin: 0;
-	padding: 0;
-	color: #fff;
+.mix .card-content {
+  padding: 10px;
+  font-size: 12px;
 }
 
-.grid figcaption a {
-	text-align: center;
-	padding: 5px 10px;
-	border-radius: 2px;
-	display: inline-block;
-	background: #ed4e6e;
-	color: #fff;
+.mix .card-content .card-title, .mix .card-content .card-title:hover {
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
 }
 
-.grid .figcaptionSkills {
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 20px;
-	background: #ed4e6e;
-	color: #2c3f52;
+.promptsPrompt { background-color: #292b2c; }
+.alchemyPrompt { background-color: #da4444; }
+.anglingPrompt { background-color: #4caac9; }
+.huntingPrompt { background-color: #6cb83a; }
+.gatheringPrompt { background-color: #d061c7; }
+.miningPrompt { background-color: #7161d0; }
+.woodcuttingPrompt { background-color: #c2743b; }
+
+/* Grid Breakpoints
+---------------------------------------------------------------------- */
+/* 2 Columns */
+.mix, .gap {
+  width: calc(100%/2 - (((2 - 1) * 1rem) / 2));
 }
 
-.grid .figcaptionSkills .title {
-	margin: 0;
-	padding: 0;
-	color: #fff;
+/* 3 Columns */
+@media screen and (min-width: 541px) {
+  .mix, .gap {
+    width: calc(100%/3 - (((3 - 1) * 1rem) / 3));
+  }
 }
 
-.grid .figcaptionSkills a {
-	text-align: center;
-	padding: 5px 10px;
-	border-radius: 2px;
-	display: inline-block;
-	background: #2c3f52;
-	color: #fff;
+/* 4 Columns */
+@media screen and (min-width: 961px) {
+  .mix, .gap {
+    width: calc(100%/4 - (((4 - 1) * 1rem) / 4));
+  }
 }
 
-.cs-style-3 figure {
-	overflow: hidden;
+/* 5 Columns */
+@media screen and (min-width: 1281px) {
+  .mix, .gap {
+    width: calc(100%/5 - (((5 - 1) * 1rem) / 5));
+  }
 }
+/* =================================================================================== */
 
-.cs-style-3 figure img {
-	-webkit-transition: -webkit-transform 0.4s;
-	-moz-transition: -moz-transform 0.4s;
-	transition: transform 0.4s;
+/* ================================= PROMPTS BUTTON ================================== */
+/* Prompts Button */
+.btn-prompts { 
+  color: #ffffff; 
+  background-color: #292B2C; 
+  border-color: #1A1B1C; 
+} 
+ 
+.btn-prompts:hover, 
+.btn-prompts:focus, 
+.btn-prompts:active, 
+.btn-prompts.active, 
+.open .dropdown-toggle.btn-prompts { 
+  color: #ffffff; 
+  background-color: #151617; 
+  border-color: #1A1B1C; 
+} 
+ 
+.btn-prompts:active, 
+.btn-prompts.active, 
+.open .dropdown-toggle.btn-prompts { 
+  background-image: none; 
+} 
+ 
+.btn-prompts.disabled, 
+.btn-prompts[disabled], 
+fieldset[disabled] .btn-prompts, 
+.btn-prompts.disabled:hover, 
+.btn-prompts[disabled]:hover, 
+fieldset[disabled] .btn-prompts:hover, 
+.btn-prompts.disabled:focus, 
+.btn-prompts[disabled]:focus, 
+fieldset[disabled] .btn-prompts:focus, 
+.btn-prompts.disabled:active, 
+.btn-prompts[disabled]:active, 
+fieldset[disabled] .btn-prompts:active, 
+.btn-prompts.disabled.active, 
+.btn-prompts[disabled].active, 
+fieldset[disabled] .btn-prompts.active { 
+  background-color: #292B2C; 
+  border-color: #1A1B1C; 
+} 
+ 
+.btn-prompts .badge { 
+  color: #292B2C; 
+  background-color: #ffffff; 
 }
-
-.no-touch .cs-style-3 figure:hover img,
-.cs-style-3 figure.cs-hover img {
-	-webkit-transform: translateY(-50px);
-	-moz-transform: translateY(-50px);
-	-ms-transform: translateY(-50px);
-	transform: translateY(-50px);
+/* Alchemy Button */
+.btn-alchemy { 
+  color: #ffffff; 
+  background-color: #DA4444; 
+  border-color: #BD3535; 
+} 
+ 
+.btn-alchemy:hover, 
+.btn-alchemy:focus, 
+.btn-alchemy:active, 
+.btn-alchemy.active, 
+.open .dropdown-toggle.btn-alchemy { 
+  color: #ffffff; 
+  background-color: #B53636; 
+  border-color: #BD3535; 
+} 
+ 
+.btn-alchemy:active, 
+.btn-alchemy.active, 
+.open .dropdown-toggle.btn-alchemy { 
+  background-image: none; 
+} 
+ 
+.btn-alchemy.disabled, 
+.btn-alchemy[disabled], 
+fieldset[disabled] .btn-alchemy, 
+.btn-alchemy.disabled:hover, 
+.btn-alchemy[disabled]:hover, 
+fieldset[disabled] .btn-alchemy:hover, 
+.btn-alchemy.disabled:focus, 
+.btn-alchemy[disabled]:focus, 
+fieldset[disabled] .btn-alchemy:focus, 
+.btn-alchemy.disabled:active, 
+.btn-alchemy[disabled]:active, 
+fieldset[disabled] .btn-alchemy:active, 
+.btn-alchemy.disabled.active, 
+.btn-alchemy[disabled].active, 
+fieldset[disabled] .btn-alchemy.active { 
+  background-color: #DA4444; 
+  border-color: #BD3535; 
+} 
+ 
+.btn-alchemy .badge { 
+  color: #DA4444; 
+  background-color: #ffffff; 
 }
-
-.cs-style-3 figcaption, .cs-style-3 .figcaptionSkills {
-	height: 100px;
-	width: 100%;
-	top: auto;
-	bottom: 0;
-	opacity: 0;
-	-webkit-transform: translateY(100%);
-	-moz-transform: translateY(100%);
-	-ms-transform: translateY(100%);
-	transform: translateY(100%);
-	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
-	-moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
-	transition: transform 0.4s, opacity 0.1s 0.3s;
+/* Angling Button */
+.btn-angling { 
+  color: #ffffff; 
+  background-color: #4CAAC9; 
+  border-color: #388EAB; 
+} 
+ 
+.btn-angling:hover, 
+.btn-angling:focus, 
+.btn-angling:active, 
+.btn-angling.active, 
+.open .dropdown-toggle.btn-angling { 
+  color: #ffffff; 
+  background-color: #3A87A1; 
+  border-color: #388EAB; 
+} 
+ 
+.btn-angling:active, 
+.btn-angling.active, 
+.open .dropdown-toggle.btn-angling { 
+  background-image: none; 
+} 
+ 
+.btn-angling.disabled, 
+.btn-angling[disabled], 
+fieldset[disabled] .btn-angling, 
+.btn-angling.disabled:hover, 
+.btn-angling[disabled]:hover, 
+fieldset[disabled] .btn-angling:hover, 
+.btn-angling.disabled:focus, 
+.btn-angling[disabled]:focus, 
+fieldset[disabled] .btn-angling:focus, 
+.btn-angling.disabled:active, 
+.btn-angling[disabled]:active, 
+fieldset[disabled] .btn-angling:active, 
+.btn-angling.disabled.active, 
+.btn-angling[disabled].active, 
+fieldset[disabled] .btn-angling.active { 
+  background-color: #4CAAC9; 
+  border-color: #388EAB; 
+} 
+ 
+.btn-angling .badge { 
+  color: #4CAAC9; 
+  background-color: #ffffff; 
 }
-
-.no-touch .cs-style-3 figure:hover figcaption,
-.cs-style-3 figure.cs-hover figcaption,
-.no-touch .cs-style-3 figure:hover .figcaptionSkills,
-.cs-style-3 figure.cs-hover .figcaptionSkills {
-	opacity: 1;
-	-webkit-transform: translateY(0px);
-	-moz-transform: translateY(0px);
-	-ms-transform: translateY(0px);
-	transform: translateY(0px);
-	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
-	-moz-transition: -moz-transform 0.4s, opacity 0.1s;
-	transition: transform 0.4s, opacity 0.1s;
+/* Hunting Button */
+.btn-hunting { 
+  color: #ffffff; 
+  background-color: #6CB83A; 
+  border-color: #5EA132; 
+} 
+ 
+.btn-hunting:hover, 
+.btn-hunting:focus, 
+.btn-hunting:active, 
+.btn-hunting.active, 
+.open .dropdown-toggle.btn-hunting { 
+  color: #ffffff; 
+  background-color: #5FA332; 
+  border-color: #5EA132; 
+} 
+ 
+.btn-hunting:active, 
+.btn-hunting.active, 
+.open .dropdown-toggle.btn-hunting { 
+  background-image: none; 
+} 
+ 
+.btn-hunting.disabled, 
+.btn-hunting[disabled], 
+fieldset[disabled] .btn-hunting, 
+.btn-hunting.disabled:hover, 
+.btn-hunting[disabled]:hover, 
+fieldset[disabled] .btn-hunting:hover, 
+.btn-hunting.disabled:focus, 
+.btn-hunting[disabled]:focus, 
+fieldset[disabled] .btn-hunting:focus, 
+.btn-hunting.disabled:active, 
+.btn-hunting[disabled]:active, 
+fieldset[disabled] .btn-hunting:active, 
+.btn-hunting.disabled.active, 
+.btn-hunting[disabled].active, 
+fieldset[disabled] .btn-hunting.active { 
+  background-color: #6CB83A; 
+  border-color: #5EA132; 
+} 
+ 
+.btn-hunting .badge { 
+  color: #6CB83A; 
+  background-color: #ffffff; 
 }
-
-/*
-.cs-style-3 figcaption a {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
+/* Gathering Button */
+.btn-gathering { 
+  color: #ffffff; 
+  background-color: #D061C7; 
+  border-color: #B04AA7; 
+} 
+ 
+.btn-gathering:hover, 
+.btn-gathering:focus, 
+.btn-gathering:active, 
+.btn-gathering.active, 
+.open .dropdown-toggle.btn-gathering { 
+  color: #ffffff; 
+  background-color: #C455BB; 
+  border-color: #B04AA7; 
+} 
+ 
+.btn-gathering:active, 
+.btn-gathering.active, 
+.open .dropdown-toggle.btn-gathering { 
+  background-image: none; 
+} 
+ 
+.btn-gathering.disabled, 
+.btn-gathering[disabled], 
+fieldset[disabled] .btn-gathering, 
+.btn-gathering.disabled:hover, 
+.btn-gathering[disabled]:hover, 
+fieldset[disabled] .btn-gathering:hover, 
+.btn-gathering.disabled:focus, 
+.btn-gathering[disabled]:focus, 
+fieldset[disabled] .btn-gathering:focus, 
+.btn-gathering.disabled:active, 
+.btn-gathering[disabled]:active, 
+fieldset[disabled] .btn-gathering:active, 
+.btn-gathering.disabled.active, 
+.btn-gathering[disabled].active, 
+fieldset[disabled] .btn-gathering.active { 
+  background-color: #D061C7; 
+  border-color: #B04AA7; 
+} 
+ 
+.btn-gathering .badge { 
+  color: #D061C7; 
+  background-color: #ffffff; 
 }
-*/
-
-@media screen and (max-width: 31.5em) {
-	.grid {
-		padding: 10px 10px 100px 10px;
-	}
-	.grid li {
-		width: 100%;
-		min-width: 300px;
-	}
+/* Mining Button */
+.btn-mining { 
+  color: #ffffff; 
+  background-color: #7161D0; 
+  border-color: #5644BD; 
+} 
+ 
+.btn-mining:hover, 
+.btn-mining:focus, 
+.btn-mining:active, 
+.btn-mining.active, 
+.open .dropdown-toggle.btn-mining { 
+  color: #ffffff; 
+  background-color: #695CB8; 
+  border-color: #5644BD; 
+} 
+ 
+.btn-mining:active, 
+.btn-mining.active, 
+.open .dropdown-toggle.btn-mining { 
+  background-image: none; 
+} 
+ 
+.btn-mining.disabled, 
+.btn-mining[disabled], 
+fieldset[disabled] .btn-mining, 
+.btn-mining.disabled:hover, 
+.btn-mining[disabled]:hover, 
+fieldset[disabled] .btn-mining:hover, 
+.btn-mining.disabled:focus, 
+.btn-mining[disabled]:focus, 
+fieldset[disabled] .btn-mining:focus, 
+.btn-mining.disabled:active, 
+.btn-mining[disabled]:active, 
+fieldset[disabled] .btn-mining:active, 
+.btn-mining.disabled.active, 
+.btn-mining[disabled].active, 
+fieldset[disabled] .btn-mining.active { 
+  background-color: #7161D0; 
+  border-color: #5644BD; 
+} 
+ 
+.btn-mining .badge { 
+  color: #7161D0; 
+  background-color: #ffffff; 
+}
+/* Wood-Cutting Button */
+.btn-woodcutting { 
+  color: #ffffff; 
+  background-color: #C2743B; 
+  border-color: #A8612D; 
+} 
+ 
+.btn-woodcutting:hover, 
+.btn-woodcutting:focus, 
+.btn-woodcutting:active, 
+.btn-woodcutting.active, 
+.open .dropdown-toggle.btn-woodcutting { 
+  color: #ffffff; 
+  background-color: #AD6532; 
+  border-color: #A8612D; 
+} 
+ 
+.btn-woodcutting:active, 
+.btn-woodcutting.active, 
+.open .dropdown-toggle.btn-woodcutting { 
+  background-image: none; 
+} 
+ 
+.btn-woodcutting.disabled, 
+.btn-woodcutting[disabled], 
+fieldset[disabled] .btn-woodcutting, 
+.btn-woodcutting.disabled:hover, 
+.btn-woodcutting[disabled]:hover, 
+fieldset[disabled] .btn-woodcutting:hover, 
+.btn-woodcutting.disabled:focus, 
+.btn-woodcutting[disabled]:focus, 
+fieldset[disabled] .btn-woodcutting:focus, 
+.btn-woodcutting.disabled:active, 
+.btn-woodcutting[disabled]:active, 
+fieldset[disabled] .btn-woodcutting:active, 
+.btn-woodcutting.disabled.active, 
+.btn-woodcutting[disabled].active, 
+fieldset[disabled] .btn-woodcutting.active { 
+  background-color: #C2743B; 
+  border-color: #A8612D; 
+} 
+ 
+.btn-woodcutting .badge { 
+  color: #C2743B; 
+  background-color: #ffffff; 
 }
 /* =================================================================================== */
