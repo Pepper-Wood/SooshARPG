@@ -5,14 +5,169 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SooshARPG | Kumo and Lottie</title>
   <link rel="shortcut icon" type="image/png" href="img/favicon.png"/>
+  
+  <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+  <ul class="tab">
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'General')" id="defaultOpen">Villager Info</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Skills')">Life Skills Experience</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Inventory')">Inventory</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Crafting')">Crafting</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Prompts')">Prompts</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Achievements')">Achievements</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Bandana')">Bandana</a></li>
+  </ul>
+
+  <div id="General" class="tabcontent">
+    <div class="container-fluid">
+      <div class="col-md-4">
+        <div class="kumoimage"><img src="img/kumo.png"></div>
+      </div>
+      <div class="col-md-8">
+        <h3>Profile</h3>
+        <br>
+        <b>Name:</b> Kumo the Soosh, Lottie the Spider<br>
+        <b>Pronouns:</b> He/Him for Kumo, She/Her for Lottie<br>
+        <b>Food/Drink:</b> <a target="_blank" href="http://files.recipetips.com/images/recipe/McCormick/Sweet_Spider_Cakes.jpg">Sweet Spider Cakes</a><br>
+        <b>Village:</b> Spicy Village<br>
+        <b>Personality:</b> Energetic, Childlike, Optimistic, Absentminded, Outspoken, Enthusiastic, Unrestrained<br>
+        <br>
+        <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Kumo-and-Lottie-661632308"><button type="button" class="btn btn-primary">ARPG Application</button></a>
+        <a target="_blank" href="http://toyhou.se/616866.kumo-and-lottie"><button type="button" class="btn btn-primary">Toyhou.se Profile</button></a>
+        <a target="_blank" href="http://soosharpg.deviantart.com/"><button type="button" class="btn btn-info">dA Group</button></a>
+        <a target="_blank" href="http://soosharpg.weebly.com/"><button type="button" class="btn btn-info">Weebly Site</button></a>
+        <br>
+        <h3>Level and Magic</h3>
+        <br>
+        <b>Current Level:</b> 1<br>
+        <b>Prompts Completed:</b> 2<br>
+        <b>Experience Earned:</b> 19 exp.<br>
+        <br>
+        <b>Domestic or Combat:</b> Domestic<br>
+        <b>Magic Ability:</b> Shoots spider web (yes, like Spiderman)<br>
+        <br>
+        <h3>Notable Relationships</h3>
+        <br>
+        <b>Friends and Family:</b> Unknown<br>
+        <b>Rivals and Enemies:</b> Unknown<br>
+        <b>Significant Other(s):</b> Unknown<br>
+      </div>
+    </div>
+  </div>
+
+  <div id="Skills" class="tabcontent">
+    <div class="container-fluid">
+      <div id="lifeSkillStatistics" class="col-md-4"></div>
+      <div class="col-md-8">
+        <div class="container-fluid">
+          <b>Alchemy Quests Completed:</b>
+          <ul>
+            <li><a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">Sleeping Beauty</a></li>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <b>Angling Quests Completed:</b>
+          <ul>
+            <li>none</li>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <b>Hunting Quests Completed:</b>
+          <ul>
+            <li>none</li>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <b>Gathering Quests Completed:</b>
+          <ul>
+            <li>none</li>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <b>Mining Quests Completed:</b>
+          <ul>
+            <li>none</li>
+          </ul>
+        </div>
+        <div class="container-fluid">
+          <b>Wood-cutting Quests Completed:</b>
+          <ul>
+            <li>none</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="Inventory" class="tabcontent">
+    <div id="inventoryInner"></div>
+  </div>
+
+  <div id="Crafting" class="tabcontent">
+    <div id="results"></div>
+  </div>
+
+  <div id="Prompts" class="tabcontent">
+    <ul class="grid cs-style-3">
+      <li>
+        <figure>
+          <img src="img/feb17prompt.png" alt="img04">
+          <figcaption>
+            <span class="title">February 2017 - "What Is Love"<br></span>
+            Draw your Soosh impressing someone they admire<br>
+            <a target="_blank" href="http://soosharpg.deviantart.com/art/Soosh-ARPG-Prompt-Be-Back-in-a-LILY-Bit-666438758">Link to Entry</a>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="img/march17prompt.png" alt="img01">
+          <figcaption>
+            <span class="title">March 2017 - ????<br></span>
+            Draw your Soosh showing off their favorite hobby<br>
+            <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Prompt-Just-Another-Afternoon-668680405">Link to Entry</a>
+          </figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <img src="img/alchemy2.png" alt="img01">
+          <figcaption class="figcaptionSkills">
+            <span class="title">Alchemy - "Sleeping Beauty"<br></span>
+            Prepare Energy Soda<br>
+            <a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">Link to Entry</a>
+          </figcaption>
+        </figure>
+      </li>
+    </ul>
+  </div>
+
+  <div id="Achievements" class="tabcontent">
+    Key: <span class="achievementsButton bg-tutorial">Tutorial Achievement</span>, <span class="achievementsButton bg-exclusive">Exclusive Achievement</span>, <span class="achievementsButton bg-quest">Quest Achievement</span>, <span class="achievementsButton bg-lifeskills">Life Skills Achievement</span>
+    <table class="table">
+      <thead><tr><th>No.</th><th>Achievement Name</th><th>Description</th><th>Awarded</th></tr></thead>
+      <tbody>
+        <tr class="bg-tutorial"><th scope="row">#001</th><td>A Hero Is Born</td><td>Be accepted into the SooshARPG for the first time.</td><td>February 2017</td></tr>
+        <tr class="bg-tutorial"><th scope="row">#002</th><td>Strike a Cord</td><td>Join the Culario Discord Server.</td><td>February 2017</td></tr>
+        <tr class="bg-exclusive"><th scope="row">#003</th><td>The Alpha Dog</td><td>Receive an Early Access Pass to the ARPG.</td><td>February 2017</td></tr>
+        <tr class="bg-exclusive"><th scope="row">#018</th><td>What Is Love</td><td>Participate in the 2017 Valentine's Day Prompts.</td><td>February 2017</td></tr>
+        <tr class="bg-lifeskills"><th scope="row">#019</th><td>On The Road to Greatness</td><td>Unlock Rookie Knowledge Milestone in any Life Skill.</td><td>February 2017</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="Bandana" class="tabcontent">
+    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Alpha Tester Charm"><img src="img/alpha_tester_charm.png"></a>
+  </div>
+
+  <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="css/comp.css" />
   <script src="js/modernizr.custom.js"></script>
   <script src="js/taffy.js"></script>
-  <link rel="stylesheet" href="css/bubble.css">
-  <link rel="stylesheet" href="css/style.css">
   <script>
   $(document).ready(function(){
     var SWIRL_SEEDS = 32;
@@ -90,8 +245,7 @@
         var levelCap = (expLevels({id:(lifeSkill.levelID+1)}).first()).exp;
         finalString += lifeSkill.exp + "/" + levelCap + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-";
         finalString += (expLevels({id:lifeSkill.levelID}).first()).progress + " progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
-        var percentage = 100*(lifeSkill.exp/levelCap);
-        var percentage = Math.round(percentage);
+        var percentage = Math.round(100*(lifeSkill.exp/levelCap));
         if (percentage == 0) { finalString += "5"; }
         else { finalString += percentage; }
         finalString += "%'>" + percentage + "%</div></div></div>";
@@ -149,183 +303,28 @@
     }
   });
   </script>
-</head>
-<body>
-
-<ul class="tab">
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'General')" id="defaultOpen">Villager Info</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Skills')">Life Skills Experience</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Inventory')">Inventory</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Crafting')">Crafting</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Prompts')">Prompts</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Achievements')">Achievements</a></li>
-  <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Bandana')">Bandana</a></li>
-</ul>
-
-<div id="General" class="tabcontent">
-  <div class="container-fluid">
-    <div class="col-md-4">
-      <div class="kumoimage"><img src="img/kumo.png"></div>
-    </div>
-    <div class="col-md-8">
-      <h3>Profile</h3>
-      <br>
-      <b>Name:</b> Kumo the Soosh, Lottie the Spider<br>
-      <b>Pronouns:</b> He/Him for Kumo, She/Her for Lottie<br>
-      <b>Food/Drink:</b> <a target="_blank" href="http://files.recipetips.com/images/recipe/McCormick/Sweet_Spider_Cakes.jpg">Sweet Spider Cakes</a><br>
-      <b>Village:</b> Spicy Village<br>
-      <b>Personality:</b> Energetic, Childlike, Optimistic, Absentminded, Outspoken, Enthusiastic, Unrestrained<br>
-      <br>
-      <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Kumo-and-Lottie-661632308"><button type="button" class="btn btn-primary">ARPG Application</button></a>
-      <a target="_blank" href="http://toyhou.se/616866.kumo-and-lottie"><button type="button" class="btn btn-primary">Toyhou.se Profile</button></a>
-      <a target="_blank" href="http://soosharpg.deviantart.com/"><button type="button" class="btn btn-info">dA Group</button></a>
-      <a target="_blank" href="http://soosharpg.weebly.com/"><button type="button" class="btn btn-info">Weebly Site</button></a>
-      <br>
-      <h3>Level and Magic</h3>
-      <br>
-      <b>Current Level:</b> 1<br>
-      <b>Prompts Completed:</b> 2<br>
-      <b>Experience Earned:</b> 19 exp.<br>
-      <br>
-      <b>Domestic or Combat:</b> Domestic<br>
-      <b>Magic Ability:</b> Shoots spider web (yes, like Spiderman)<br>
-      <br>
-      <h3>Notable Relationships</h3>
-      <br>
-      <b>Friends and Family:</b> Unknown<br>
-      <b>Rivals and Enemies:</b> Unknown<br>
-      <b>Significant Other(s):</b> Unknown<br>
-    </div>
-  </div>
-</div>
-
-<div id="Skills" class="tabcontent">
-  <div class="container-fluid">
-    <div id="lifeSkillStatistics" class="col-md-4"></div>
-    <div class="col-md-8">
-      <div class="container-fluid">
-        <b>Alchemy Quests Completed:</b>
-        <ul>
-          <li><a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">Sleeping Beauty</a></li>
-        </ul>
-      </div>
-      <div class="container-fluid">
-        <b>Angling Quests Completed:</b>
-        <ul>
-          <li>none</li>
-        </ul>
-      </div>
-      <div class="container-fluid">
-        <b>Hunting Quests Completed:</b>
-        <ul>
-          <li>none</li>
-        </ul>
-      </div>
-      <div class="container-fluid">
-        <b>Gathering Quests Completed:</b>
-        <ul>
-          <li>none</li>
-        </ul>
-      </div>
-      <div class="container-fluid">
-        <b>Mining Quests Completed:</b>
-        <ul>
-          <li>none</li>
-        </ul>
-      </div>
-      <div class="container-fluid">
-        <b>Wood-cutting Quests Completed:</b>
-        <ul>
-          <li>none</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="Inventory" class="tabcontent">
-  <div id="inventoryInner"></div>
-</div>
-
-<div id="Crafting" class="tabcontent">
-  <div id="results"></div>
-</div>
-
-<div id="Prompts" class="tabcontent">
-  <ul class="grid cs-style-3">
-    <li>
-      <figure>
-        <img src="img/feb17prompt.png" alt="img04">
-        <figcaption>
-          <span class="title">February 2017 - "What Is Love"<br></span>
-          Draw your Soosh impressing someone they admire<br>
-          <a target="_blank" href="http://soosharpg.deviantart.com/art/Soosh-ARPG-Prompt-Be-Back-in-a-LILY-Bit-666438758">Link to Entry</a>
-        </figcaption>
-      </figure>
-    </li>
-    <li>
-      <figure>
-        <img src="img/march17prompt.png" alt="img01">
-        <figcaption>
-          <span class="title">March 2017 - ????<br></span>
-          Draw your Soosh showing off their favorite hobby<br>
-          <a target="_blank" href="http://pepper-wood.deviantart.com/art/Soosh-ARPG-Prompt-Just-Another-Afternoon-668680405">Link to Entry</a>
-        </figcaption>
-      </figure>
-    </li>
-    <li>
-      <figure>
-        <img src="img/alchemy2.png" alt="img01">
-        <figcaption class="figcaptionSkills">
-          <span class="title">Alchemy - "Sleeping Beauty"<br></span>
-          Prepare Energy Soda<br>
-          <a target="_blank" href="http://pepper-wood.deviantart.com/art/Sleeping-Beauty-Alchemy-Prompt-670961185">Link to Entry</a>
-        </figcaption>
-      </figure>
-    </li>
-  </ul>
-</div>
-
-<div id="Achievements" class="tabcontent">
-  Key: <span class="achievementsButton bg-tutorial">Tutorial Achievement</span>, <span class="achievementsButton bg-exclusive">Exclusive Achievement</span>, <span class="achievementsButton bg-quest">Quest Achievement</span>, <span class="achievementsButton bg-lifeskills">Life Skills Achievement</span>
-  <table class="table">
-    <thead><tr><th>No.</th><th>Achievement Name</th><th>Description</th><th>Awarded</th></tr></thead>
-    <tbody>
-      <tr class="bg-tutorial"><th scope="row">#001</th><td>A Hero Is Born</td><td>Be accepted into the SooshARPG for the first time.</td><td>February 2017</td></tr>
-      <tr class="bg-tutorial"><th scope="row">#002</th><td>Strike a Cord</td><td>Join the Culario Discord Server.</td><td>February 2017</td></tr>
-      <tr class="bg-exclusive"><th scope="row">#003</th><td>The Alpha Dog</td><td>Receive an Early Access Pass to the ARPG.</td><td>February 2017</td></tr>
-      <tr class="bg-exclusive"><th scope="row">#018</th><td>What Is Love</td><td>Participate in the 2017 Valentine's Day Prompts.</td><td>February 2017</td></tr>
-      <tr class="bg-lifeskills"><th scope="row">#019</th><td>On The Road to Greatness</td><td>Unlock Rookie Knowledge Milestone in any Life Skill.</td><td>February 2017</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<div id="Bandana" class="tabcontent">
-  <a href="#" data-toggle="tooltip" data-placement="bottom" title="Alpha Tester Charm"><img src="img/alpha_tester_charm.png"></a>
-</div>
-
-<script>
-  function openCity(evt, cityName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
+  <script>
+    function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" activeTab", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " activeTab";
     }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" activeTab", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " activeTab";
-  }
 
-  // Get the element with id="defaultOpen" and click on it
-  document.getElementById("defaultOpen").click();
-</script>
-<script>
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-  });
-</script>
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+  </script>
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
 </body>
 </html>
