@@ -18,7 +18,7 @@
           <form class="form-horizontal" action="" method="post">
           <fieldset>
             <legend class="text-center">Dailies Rolling</legend>
-    
+            
             <!-- DailyType input-->
             <div class="form-group">
               <label class="col-md-3 control-label" for="dailyType">Daily Type</label>
@@ -47,6 +47,29 @@
                 </select>
               </div>
             </div>
+            
+            <!-- Name input-->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="sooshName">Soosh's Name</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" id="sooshName">
+              </div>
+            </div>
+            
+            <!-- Soosh Skill input-->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="skillLevel">Soosh's Skill Level</label>
+              <div class="col-md-9">
+                <select id="skillLevel" class="form-control">
+                  <option value="0">Novice/Rookie</option>
+                  <option value="1">Apprentice</option>
+                  <option value="2">Whiz</option>
+                  <option value="3">Genius</option>
+                  <option value="4">Master</option>
+                  <option value="5">Hero</option>
+                </select>
+              </div>
+            </div>
     
             <!-- Button -->
             <div class="form-group">
@@ -60,6 +83,14 @@
               <label class="col-md-3 control-label" for="dailyOutput">Daily Result</label>
               <div class="col-md-9">
                 <textarea class="form-control" id="dailyOutput" name="message" rows="5"></textarea>
+              </div>
+            </div>
+            
+            <!-- Daily Result textarea -->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="formalOutput">Formal Result</label>
+              <div class="col-md-9">
+                <textarea class="form-control" id="formalOutput" name="message" rows="5"></textarea>
               </div>
             </div>
           </fieldset>
@@ -94,11 +125,26 @@
     var e = document.getElementById("dailyType");
     var loc = document.getElementById("locationType").value;
     var dailyType = e.options[e.selectedIndex].value;
+    var bonus = parseInt(document.getElementById("skillLevel").value);
+    
+    // Kumo and Lottie went Gathering in The Thickets.
+    var formalString = "<small>";
+    var sooshName = document.getElementById("sooshName").value;
+    if (sooshName != "") {
+      formalString += sooshName;
+    } else {
+      formalString += "SOOSHNAME";
+    }
+    formalString += " went ";
+    formalString += e.value;
+    formalString += " in ";
+    formalString += loc;
+    document.getElementById("formalOutput").innerHTML = formalString;
     
     // ------------------------------------------------------------------
     // crafting
     if (dailyType == "crafting") {
-      result = rollDie(20);
+      result = rollDie(20) + bonus;
       finalString = result;
       finalString += ": ";
       if (result == 1) {
@@ -109,13 +155,13 @@
         finalString += "failure but creates new item";
       } else if ((result >= 13) && (result <= 19)) {
         finalString += "success";
-      } else if (result == 20) {
+      } else if (result >= 20) {
         finalString += "success and a buff for the next time they craft";
       }
     // ------------------------------------------------------------------
     // hunting and fishing
     } else if ((dailyType == "hunting") || (dailyType == "fishing")) {
-      result = rollDie(20);
+      result = rollDie(20) + bonus;
       finalString = result;
       finalString += ": ";
       if (result == 1) {
@@ -155,7 +201,7 @@
         }
         finalString += DBresults[rIndex(DBresults.length)];
         finalString += " was picked."
-      } else if (result == 20) {
+      } else if (result >= 20) {
         var DBresults;
         if (dailyType == "fishing") {
           finalString += "gets a rare fish and a buff for the next time they go hunting\n";
@@ -170,7 +216,7 @@
     // ------------------------------------------------------------------
     // mining and woodcutting
     } else if ((dailyType == "mining") || (dailyType == "woodcutting")) {
-      result_one = rollDie(20);
+      result_one = rollDie(20) + bonus;
       result_two = rollDie(20);
       finalString = result_one;
       finalString += ",";
@@ -213,7 +259,7 @@
         }
         finalString += DBresults[rIndex(DBresults.length)];
         finalString += " was picked."
-      } else if (result_one == 20) {
+      } else if (result_one >= 20) {
         var DBresults;
         if (dailyType == "mining") {
           finalString += "gets QUANTITY rare rocks and a positive buff for the next time they go mining\n";
@@ -240,7 +286,7 @@
     // gathering
     } else if (dailyType == "gathering") {
       var DBresults;
-      result_one = rollDie(20);
+      result_one = rollDie(20) + bonus;
       result_two = rollDie(6);
       result_three = rollDie(20);
       finalString = result_one;
@@ -263,7 +309,7 @@
       } else if ((result_one >= 17) && (result_one <= 19)) {
         finalString += "gets QUANTITY rare ITEM\n";
         rarityFlag = "rare";
-      } else if (result_one == 20) {
+      } else if (result_one >= 20) {
         finalString += "gets QUANTITY rare ITEM and a positive buff for the next time they go gathering\n";
         rarityFlag = "rare";
       }
