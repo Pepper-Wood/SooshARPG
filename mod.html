@@ -13,32 +13,89 @@
 <body>
   <div class="container">
     <div class="row">
-      <select id="dailyType">
-        <option value="crafting">Crafting</option>
-        <option value="hunting">Hunting</option>
-        <option value="fishing">Fishing</option>
-        <option value="mining">Mining</option>
-        <option value="woodcutting">Woodcutting</option>
-        <option value="gathering">Gathering</option>
-      </select>
-      
-      <button type="button" class="btn btn-primary" onclick="rollDaily()">Roll Daily</button>
-    </div>
-    <div class="row">
-      <textarea id="dailyOutput" rows="4" cols="50"></textarea>
-    </div>
+      <div class="col-md-6 col-md-offset-3">
+        <div class="well well-sm">
+          <form class="form-horizontal" action="" method="post">
+          <fieldset>
+            <legend class="text-center">Dailies Rolling</legend>
     
+            <!-- DailyType input-->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="dailyType">Daily Type</label>
+              <div class="col-md-9">
+                <select id="dailyType" class="form-control">
+                  <option value="crafting">Crafting</option>
+                  <option value="hunting">Hunting</option>
+                  <option value="fishing">Angling</option>
+                  <option value="mining">Mining</option>
+                  <option value="woodcutting">Woodcutting</option>
+                  <option value="gathering">Gathering</option>
+                </select>
+              </div>
+            </div>
+    
+            <!-- Location input-->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="locationType">Location</label>
+              <div class="col-md-9">
+                <select id="locationType" class="form-control">
+                  <option value="thickets">The Thickets</option>
+                  <option value="midwoods">The Midwoods</option>
+                  <option value="thorns">The Thorns</option>
+                  <option value="solitude">Mount Solitude</option>
+                  <option value="reflections">Lake of Reflections</option>
+                </select>
+              </div>
+            </div>
+    
+            <!-- Button -->
+            <div class="form-group">
+              <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-primary btn-block" onclick="rollDaily()">Roll Daily</button>
+              </div>
+            </div>
+            
+            <!-- Daily Result textarea -->
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="dailyOutput">Daily Result</label>
+              <div class="col-md-9">
+                <textarea class="form-control" id="dailyOutput" name="message" rows="5"></textarea>
+              </div>
+            </div>
+          </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   
   <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/taffy.js"></script>
+  <script src="js/DAILIESDB.js"></script>
   <script>
+  // ------------------------------------------------------------------
+  // dice roller helper function
+  function rollDie(dieSize) {
+    return Math.floor((Math.random() * dieSize) + 1);
+  }
+  
+  // ------------------------------------------------------------------
+  // generate random index for selecting item obtained
+  function rIndex(itemNum) {
+    return Math.floor((Math.random() * itemNum));
+  }
+  
+  // ------------------------------------------------------------------
+  // function for calculating daily rolls
   function rollDaily() {
-    var finalString = "Hello World";
+    var finalString = "";
     var e = document.getElementById("dailyType");
+    var loc = document.getElementById("locationType").value;
     var dailyType = e.options[e.selectedIndex].value;
     
+    // ------------------------------------------------------------------
     // crafting
     if (dailyType == "crafting") {
       result = rollDie(20);
@@ -55,6 +112,7 @@
       } else if (result == 20) {
         finalString += "success and a buff for the next time they craft";
       }
+    // ------------------------------------------------------------------
     // hunting and fishing
     } else if ((dailyType == "hunting") || (dailyType == "fishing")) {
       result = rollDie(20);
@@ -65,18 +123,51 @@
       } else if ((result >= 2) && (result <= 6)) {
         finalString += "straight failure";
       } else if ((result >= 7) && (result <= 12)) {
-        finalString += "gets a common animal";
+        var DBresults;
+        if (dailyType == "fishing") {
+          finalString += "gets a common fish\n";
+          DBresults = anglingDB({location:loc,rarity:"common"}).select("name");
+        } else {
+          finalString += "gets a common animal\n";
+          DBresults = huntingDB({location:loc,difficulty:"easy"}).select("name");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if ((result >= 13) && (result <= 16)) {
-        finalString += "gets an uncommon animal";
+        var DBresults;
+        if (dailyType == "fishing") {
+          finalString += "gets an uncommon fish\n";
+          DBresults = anglingDB({location:loc,rarity:"uncommon"}).select("name");
+        } else {
+          finalString += "gets an uncommon animal\n";
+          DBresults = huntingDB({location:loc,difficulty:"medium"}).select("name");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if ((result >= 17) && (result <= 19)) {
-        finalString += "gets a rare animal";
+        var DBresults;
+        if (dailyType == "fishing") {
+          finalString += "gets a rare fish\n";
+          DBresults = anglingDB({location:loc,rarity:"rare"}).select("name");
+        } else {
+          finalString += "gets a rare animal\n";
+          DBresults = huntingDB({location:loc,difficulty:"hard"}).select("name");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if (result == 20) {
-        finalString += "gets a rare animal and a buff for the next time they go hunting";
+        var DBresults;
+        if (dailyType == "fishing") {
+          finalString += "gets a rare fish and a buff for the next time they go hunting\n";
+          DBresults = anglingDB({location:loc,rarity:"rare"}).select("name");
+        } else {
+          finalString += "gets a rare animal and a buff for the next time they go hunting\n";
+          DBresults = huntingDB({location:loc,difficulty:"hard"}).select("name");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       }
-      if (dailyType == "fishing") {
-        finalString = finalString.replace("hunting","fishing");
-        finalString = finalString.replace("animal","fish");
-      }
+    // ------------------------------------------------------------------
     // mining and woodcutting
     } else if ((dailyType == "mining") || (dailyType == "woodcutting")) {
       result_one = rollDie(20);
@@ -90,17 +181,49 @@
       } else if ((result_one >= 2) && (result_one <= 6)) {
         finalString += "straight failure";
       } else if ((result_one >= 7) && (result_one <= 12)) {
-        finalString += "gets QUANTITY common rocks";
+        var DBresults;
+        if (dailyType == "mining") {
+          finalString += "gets QUANTITY common rocks\n";
+          DBresults = miningDB({location:loc,rarity:"common"}).select("name");
+        } else {
+          finalString += "gets QUANTITY common wood\n";
+          DBresults = woodcuttingDB({location:loc,difficulty:"easy"}).select("logName");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if ((result_one >= 13) && (result_one <= 16)) {
-        finalString += "gets QUANTITY uncommon rocks";
+        var DBresults;
+        if (dailyType == "mining") {
+          finalString += "gets QUANTITY uncommon rocks\n";
+          DBresults = miningDB({location:loc,rarity:"uncommon"}).select("name");
+        } else {
+          finalString += "gets QUANTITY uncommon wood\n";
+          DBresults = woodcuttingDB({location:loc,difficulty:"medium"}).select("logName");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if ((result_one >= 17) && (result_one <= 19)) {
-        finalString += "gets QUANTITY rare rocks";
+        var DBresults;
+        if (dailyType == "mining") {
+          finalString += "gets QUANTITY rare rocks\n";
+          DBresults = miningDB({location:loc,rarity:"rare"}).select("name");
+        } else {
+          finalString += "gets QUANTITY rare wood\n";
+          DBresults = woodcuttingDB({location:loc,difficulty:"hard"}).select("logName");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       } else if (result_one == 20) {
-        finalString += "gets QUANTITY rare rocks and a positive buff for the next time they go mining";
-      }
-      if (dailyType == "woodcutting") {
-        finalString = finalString.replace("mining","woodcutting");
-        finalString = finalString.replace("rocks","wood");
+        var DBresults;
+        if (dailyType == "mining") {
+          finalString += "gets QUANTITY rare rocks and a positive buff for the next time they go mining\n";
+          DBresults = miningDB({location:loc,rarity:"rare"}).select("name");
+        } else {
+          finalString += "gets QUANTITY rare wood and a positive buff for the next time they go wood-cutting\n";
+          DBresults = woodcuttingDB({location:loc,difficulty:"hard"}).select("logName");
+        }
+        finalString += DBresults[rIndex(DBresults.length)];
+        finalString += " was picked."
       }
       if ((result_two >= 1) && (result_two <= 6)) {
         finalString = finalString.replace("QUANTITY","1");
@@ -113,8 +236,10 @@
       } else if (result_two == 20) {
         finalString = finalString.replace("QUANTITY","5");
       }
+    // ------------------------------------------------------------------
     // gathering
     } else if (dailyType == "gathering") {
+      var DBresults;
       result_one = rollDie(20);
       result_two = rollDie(6);
       result_three = rollDie(20);
@@ -124,50 +249,75 @@
       finalString += ",";
       finalString += result_three;
       finalString += ": ";
+      var rarityFlag;
       if (result_one == 1) {
-        finalString += "failure and a negative debuff";
+        finalString += "failure and a negative debuff\n";
       } else if ((result_one >= 2) && (result_one <= 6)) {
-        finalString += "straight failure";
+        finalString += "straight failure\n";
       } else if ((result_one >= 7) && (result_one <= 12)) {
-        finalString += "gets QUANTITY common ITEM";
+        finalString += "gets QUANTITY common ITEM\n";
+        rarityFlag = "common";
       } else if ((result_one >= 13) && (result_one <= 16)) {
-        finalString += "gets QUANTITY uncommon ITEM";
+        finalString += "gets QUANTITY uncommon ITEM\n";
+        rarityFlag = "uncommon";
       } else if ((result_one >= 17) && (result_one <= 19)) {
-        finalString += "gets QUANTITY rare ITEM";
+        finalString += "gets QUANTITY rare ITEM\n";
+        rarityFlag = "rare";
       } else if (result_one == 20) {
-        finalString += "gets QUANTITY rare ITEM and a positive buff for the next time they go gathering";
+        finalString += "gets QUANTITY rare ITEM and a positive buff for the next time they go gathering\n";
+        rarityFlag = "rare";
       }
-      if (result_two == 1) {
-        finalString = finalString.replace("ITEM","flowers/plants");
-      } else if (result_two == 2) {
-        finalString = finalString.replace("ITEM","small animal items/drops");
-      } else if (result_two == 3) {
-        finalString = finalString.replace("ITEM","fruits/vegetables/berries");
-      } else if (result_two == 4) {
-        finalString = finalString.replace("ITEM","crafting items");
-      } else if (result_two == 5) {
-        finalString = finalString.replace("ITEM","miscellaneous items");
-      } else if (result_two == 6) {
-        finalString = finalString.replace("ITEM","treasures");
-      }
-      if ((result_three >= 1) && (result_three <= 6)) {
-        finalString = finalString.replace("QUANTITY","1");
-      } else if ((result_three >= 6) && (result_three <= 10)) {
-        finalString = finalString.replace("QUANTITY","2");
-      } else if ((result_three >= 11) && (result_three <= 15)) {
-        finalString = finalString.replace("QUANTITY","3");
-      } else if ((result_three >= 16) && (result_three <= 19)) {
-        finalString = finalString.replace("QUANTITY","4");
-      } else if (result_three == 20) {
-        finalString = finalString.replace("QUANTITY","5");
+      if (result_one >= 7) {
+        if (result_two == 1) {
+          finalString = finalString.replace("ITEM","flowers/plants");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"flower"}).select("name");
+          DBresults = DBresults.concat(gatheringDB({location:loc,rarity:rarityFlag,type:"plant"}).select("name"));
+        } else if (result_two == 2) {
+          finalString = finalString.replace("ITEM","small animal items/drops");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"small animal items/drops"}).select("name");
+        } else if (result_two == 3) {
+          finalString = finalString.replace("ITEM","fruits/vegetables/berries");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"fruit"}).select("name");
+          DBresults = DBresults.concat(gatheringDB({location:loc,rarity:rarityFlag,type:"vegetable"}).select("name"));
+          DBresults = DBresults.concat(gatheringDB({location:loc,rarity:rarityFlag,type:"berry"}).select("name"));
+        } else if (result_two == 4) {
+          finalString = finalString.replace("ITEM","crafting items");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"crafting"}).select("name");
+        } else if (result_two == 5) {
+          finalString = finalString.replace("ITEM","miscellaneous items");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"miscellaneous"}).select("name");
+        } else if (result_two == 6) {
+          finalString = finalString.replace("ITEM","treasures");
+          DBresults = gatheringDB({location:loc,rarity:rarityFlag,type:"treasures"}).select("name");
+        }
+        var numItems;
+        if ((result_three >= 1) && (result_three <= 6)) {
+          finalString = finalString.replace("QUANTITY","1");
+          numItems = 1;
+        } else if ((result_three >= 6) && (result_three <= 10)) {
+          finalString = finalString.replace("QUANTITY","2");
+          numItems = 2;
+        } else if ((result_three >= 11) && (result_three <= 15)) {
+          finalString = finalString.replace("QUANTITY","3");
+          numItems = 3;
+        } else if ((result_three >= 16) && (result_three <= 19)) {
+          finalString = finalString.replace("QUANTITY","4");
+          numItems = 4;
+        } else if (result_three == 20) {
+          finalString = finalString.replace("QUANTITY","5");
+          numItems = 5;
+        }
+        if (DBresults.length > 0) {
+          finalString += numItems;
+          finalString += " ";
+          finalString += DBresults[rIndex(DBresults.length)];
+          finalString += " was picked."
+        } else {
+          finalString += "There are no items that are found in this location given skill and rarity generated";
+        }
       }
     }
     document.getElementById("dailyOutput").innerHTML = finalString;
-  }
-  
-  function rollDie(dieSize) {
-    return Math.floor((Math.random() * dieSize) + 1);
-    //document.getElementById("dailyOutput").innerHTML = Math.floor((Math.random() * dieSize) + 1);
   }
   </script>
 </body>
