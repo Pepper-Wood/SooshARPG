@@ -8,101 +8,272 @@
   
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/mod.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="css/mod.css" /> -->
 </head>
 <body>
+
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="well well-sm">
-          <form class="form-horizontal" action="" method="post">
-          <fieldset>
-            <legend class="text-center">Dailies Rolling</legend>
-            
-            <!-- DailyType input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="dailyType">Daily Type</label>
-              <div class="col-md-9">
-                <select id="dailyType" class="form-control">
-                  <option value="crafting">Crafting</option>
-                  <option value="hunting">Hunting</option>
-                  <option value="fishing">Angling</option>
-                  <option value="mining">Mining</option>
-                  <option value="woodcutting">Woodcutting</option>
-                  <option value="gathering">Gathering</option>
-                </select>
-              </div>
+    <h2>SooshARPG Moderator Tools</h2>
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#home">Development Log</a></li>
+      <li><a href="#menu1">Dailies Roller</a></li>
+      <li><a href="#menu2">Village Personality Test</a></li>
+      <li><a href="#menu3">Menu 3</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- DEV LOG ===================================================================================== -->
+      <div id="home" class="tab-pane fade in active">
+        <h3>Development Log</h3>
+        <ul>
+          <li>Add buffs and status effects properly into dailies roller</li>
+          <li>Figure out how this page can be password protected</li>
+        </ul>
+      </div>
+      
+      <!-- DAILIES ROLLER ============================================================================== -->
+      <div id="menu1" class="tab-pane fade">
+        <h3>Dailies Roller</h3>
+        <form class="form-horizontal" action="" method="post">
+          <!-- DailyType input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="dailyType">Daily Type</label>
+            <div class="col-md-9">
+              <select id="dailyType" class="form-control">
+                <option value="crafting">Crafting</option>
+                <option value="hunting">Hunting</option>
+                <option value="fishing">Angling</option>
+                <option value="mining">Mining</option>
+                <option value="woodcutting">Woodcutting</option>
+                <option value="gathering">Gathering</option>
+              </select>
             </div>
-    
-            <!-- Location input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="locationType">Location</label>
-              <div class="col-md-9">
-                <select id="locationType" class="form-control">
-                  <option value="thickets">The Thickets</option>
-                  <option value="midwoods">The Midwoods</option>
-                  <option value="thorns">The Thorns</option>
-                  <option value="solitude">Mount Solitude</option>
-                  <option value="reflections">Lake of Reflections</option>
-                </select>
-              </div>
+          </div>
+  
+          <!-- Location input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="locationType">Location</label>
+            <div class="col-md-9">
+              <select id="locationType" class="form-control">
+                <option value="thickets">The Thickets</option>
+                <option value="midwoods">The Midwoods</option>
+                <option value="thorns">The Thorns</option>
+                <option value="solitude">Mount Solitude</option>
+                <option value="reflections">Lake of Reflections</option>
+              </select>
             </div>
-            
-            <!-- Name input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="sooshName">Soosh's Name</label>
-              <div class="col-md-9">
-                <input type="text" class="form-control" id="sooshName">
-              </div>
+          </div>
+          
+          <!-- Name input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshName">Soosh's Name</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="sooshName">
             </div>
-            
-            <!-- Soosh Skill input-->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="skillLevel">Soosh's Skill Level</label>
-              <div class="col-md-9">
-                <select id="skillLevel" class="form-control">
-                  <option value="0">Novice/Rookie</option>
-                  <option value="1">Apprentice</option>
-                  <option value="2">Whiz</option>
-                  <option value="3">Genius</option>
-                  <option value="4">Master</option>
-                  <option value="5">Hero</option>
-                </select>
-              </div>
+          </div>
+          
+          <!-- Soosh Skill input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="skillLevel">Soosh Skill Lvl</label>
+            <div class="col-md-9">
+              <select id="skillLevel" class="form-control">
+                <option value="0">Novice/Rookie</option>
+                <option value="1">Apprentice</option>
+                <option value="2">Whiz</option>
+                <option value="3">Genius</option>
+                <option value="4">Master</option>
+                <option value="5">Hero</option>
+              </select>
             </div>
-    
-            <!-- Button -->
-            <div class="form-group">
-              <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-primary btn-block" onclick="rollDaily()">Roll Daily</button>
-              </div>
+          </div>
+          
+          <!-- Inventory input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="inventoryBuff">Additional Buff</label>
+            <div class="col-md-9">
+              <select id="inventoryBuff" class="form-control">
+                <option value="0">None</option>
+                <option value="1">Lucky Duck Potion</option>
+                <option value="2">Bad Duck Potion</option>
+              </select>
             </div>
-            
-            <!-- Daily Result textarea -->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="dailyOutput">Daily Result</label>
-              <div class="col-md-9">
-                <textarea class="form-control" id="dailyOutput" name="message" rows="5"></textarea>
-              </div>
+          </div>
+  
+          <!-- Button -->
+          <div class="form-group">
+            <div class="col-md-3"></div>
+            <div class="col-md-9 text-right">
+              <button type="button" class="btn btn-primary btn-block" onclick="rollDaily()">Roll Daily</button>
             </div>
-            
-            <!-- Daily Result textarea -->
-            <div class="form-group">
-              <label class="col-md-3 control-label" for="debugOutput">DEBUGGING</label>
-              <div class="col-md-9">
-                <textarea class="form-control" id="debugOutput" name="message" rows="5"></textarea>
-              </div>
+          </div>
+          
+          <!-- Daily Result textarea -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="dailyOutput">Daily Result</label>
+            <div class="col-md-9">
+              <textarea class="form-control" id="dailyOutput" name="message" rows="5"></textarea>
             </div>
-          </fieldset>
-          </form>
+          </div>
+          
+          <!-- copyToClipboard Button -->
+          <div class="form-group">
+            <div class="col-md-3"></div>
+            <div class="col-md-9 text-right">
+              <button type="button" id="copyToClipboard" class="btn btn-primary btn-sm btn-block">Copy Daily Result to Clipboard</button>
+            </div>
+          </div>
+          
+          <!-- Debugging textarea -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="debugOutput">DEBUGGING</label>
+            <div class="col-md-9">
+              <textarea class="form-control" id="debugOutput" name="message" rows="5"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <!-- VILLAGE PERSONALITY TEST ==================================================================== -->
+      <div id="menu2" class="tab-pane fade">
+        <h3>Village Personality Test</h3>
+        <div class="col-md-5">
+        <form class="form-horizontal" action="" method="post">
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question1">Question 1</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question1" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question1" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question1" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question1" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question2">Question 2</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question2" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question2" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question2" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question2" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question3">Question 3</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question3" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question3" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question3" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question3" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question4">Question 4</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question4" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question4" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question4" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question4" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question5">Question 5</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question5" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question5" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question5" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question5" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question6">Question 6</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question6" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question6" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question6" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question6" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question7">Question 7</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question7" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question7" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question7" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question7" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question8">Question 8</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question8" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question8" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question8" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question8" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question9">Question 9</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question9" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question9" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question9" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question9" value="D">D</label>
+            </div>
+          </div>
+          
+          <!-- Question input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="question10">Question 10</label>
+            <div class="col-md-9">
+              <label class="radio-inline"><input type="radio" name="question10" value="A">A</label>
+              <label class="radio-inline"><input type="radio" name="question10" value="B">B</label>
+              <label class="radio-inline"><input type="radio" name="question10" value="C">C</label>
+              <label class="radio-inline"><input type="radio" name="question10" value="D">D</label>
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="form-group">
+            <div class="col-md-3"></div>
+            <div class="col-md-9 text-right">
+              <button type="button" id="sortingHat" class="btn btn-primary btn-block">Calculate Village</button>
+            </div>
+          </div>
+        </form>
         </div>
+        <div class="col-md-7">
+          <div id="chartContainer"></div>
+        </div>
+      </div>
+      
+      <!-- UNKNOWN ===================================================================================== -->
+      <div id="menu3" class="tab-pane fade">
+        <h3>Menu 3</h3>
+        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
       </div>
     </div>
   </div>
-  
+
   <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/canvasjs.min.js"></script>
   <script src="js/taffy.js"></script>
   <script src="js/DAILIESDB.js"></script>
   <script>
@@ -121,7 +292,7 @@
   // ------------------------------------------------------------------
   // helper function for determining the amount of exp earned
   function getExp(quantity, rarity) {
-    var exp = quantity * 10;
+    var exp = 10;
     if (rarity == "uncommon") { exp += 5; }
     else if (rarity == "rare") { exp += 10; }
     return exp;
@@ -131,7 +302,7 @@
   // helper function for returning whatever item is returned from DBresults
   function getItem(DBresults) {
     if (DBresults.length == 0) {
-      return "There are no items that satisfy these conditions";
+      return "ERRORITEM";
     } else {
       return DBresults[rIndex(DBresults.length)];
     }
@@ -140,19 +311,23 @@
   // ------------------------------------------------------------------
   // generate formalized output. Helper function to help declutter rollDaily
   function printFormalOutput(sooshName, dailyType, loc, quantity, item, rarity, buff) {
+    if (dailyType == "crafting") {
+      return "Formal output for crafting not implemented. Refer to results in Debugging output instead.";
+    } // KEEP IN HERE UNTIL CRAFTING IS FIGURED OUT
     if (loc == "thickets") { loc = "The Thickets"; }
     else if (loc == "midwoods") { loc = "The Midwoods"; }
     else if (loc == "thorns") { loc = "The Thorns"; }
     else if (loc == "solitude") { loc = "Mount Solitude"; }
     else if (loc == "reflections") { loc = "The Lake of Reflections"; }
     formalStr = "<small>" + sooshName + " went " + dailyType + " in " + loc + ".\n";
-    if (quantity > 0) {
+    if ((quantity == 0) || (item == "ERRORITEM")) {
+      formalStr += "Unfortunately they didn’t find anything, maybe next time!"
+    } else {
       formalStr += "They managed to find <b>" + quantity.toString() + " " + item + "</b>!\n";
       formalStr += "They are awarded <b>" + getExp(quantity,rarity).toString() + " exp</b>."
-    } else {
-      formalStr += "Unfortunately they didn’t find anything, maybe next time!"
     }
-    if (buff != "") { formalStr += "\n" + buff; }
+    if (buff != "") { formalStr += "\n[[" + buff + "]]"; }
+    // Unfortunately they received the Lazy Bork Status Infliction.
     formalStr += "</small>";
     return formalStr;
   }
@@ -169,8 +344,12 @@
     var rarity = "";
     var buff = "";
     var bonus = parseInt(document.getElementById("skillLevel").value);
+    var inventoryBuff = parseInt(document.getElementById("inventoryBuff").value);
+    // add to bonus; so far, only lucky duck and bad duck have been added
+    if (inventoryBuff == 2) { bonus += -1; }
+    else { bonus += 1; }
     var DBresults;
-    var finalString = ""; // KEEP IN HERE FOR DEBUGGING
+    var finalString = ""; // KEEP IN HERE FOR DEBUGGING FOR CRAFTING
     // ------------------------------------------------------------------
     // crafting
     if (dailyType == "crafting") {
@@ -214,6 +393,7 @@
         rarity = "rare";
         quantity = 1;
         item = getItem(DBresults);
+        if (item == "BEES") { buff = "BEES!"; } // special case for BEES status effect
       } else if (result >= 20) {
         if (dailyType == "fishing") {
           buff = "a buff for the next time they go fishing";
@@ -225,6 +405,7 @@
         rarity = "rare";
         quantity = 1;
         item = getItem(DBresults);
+        if (item == "BEES") { buff = "BEES!"; } // special case for BEES status effect
       }
     // ------------------------------------------------------------------
     // mining and woodcutting
@@ -325,6 +506,103 @@
     document.getElementById("debugOutput").innerHTML = finalString;
     document.getElementById("dailyOutput").innerHTML = printFormalOutput(sooshName, dailyType, loc, quantity, item, rarity, buff);
   }
+  </script>
+  <script>
+  $(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+      $(this).tab('show');
+    });
+  });
+  </script>
+  <script>
+  $("#copyToClipboard").click(function(){
+    $("#dailyOutput").select();
+    document.execCommand('copy');
+  });
+  </script>
+  <script>
+  // ------------------------------------------------------------------
+  // helper function to quickly add values to running totals
+  function modifyCount(radioResult, sweetFlag, savoryFlag, spicyFlag, bitterFlag, villageVals) {
+    if (radioResult == sweetFlag) { villageVals[0] += 3; }
+    else if (radioResult == savoryFlag) { villageVals[1] += 3; }
+    else if (radioResult == spicyFlag) { villageVals[2] += 3; }
+    else if (radioResult == bitterFlag) { villageVals[3] += 3; }
+    return villageVals;
+  }
+  
+  // ------------------------------------------------------------------
+  // modified version of modifyCount for question 10
+  function modifyCount_quest10(radioResult, sweetFlag, savoryFlag, spicyFlag, bitterFlag, villageVals) {
+    if (radioResult == sweetFlag) {
+      villageVals[0] += 2;
+      villageVals[2] += 1;
+    } else if (radioResult == savoryFlag) {
+      villageVals[1] += 2;
+      villageVals[3] += 1;
+    } else if (radioResult == spicyFlag) {
+      villageVals[2] += 2;
+      villageVals[0] += 1;
+    } else if (radioResult == bitterFlag) {
+      villageVals[3] += 2;
+      villageVals[1] += 1;
+    }
+    return villageVals;
+  }
+  
+  // ------------------------------------------------------------------
+  // Main body of code for running the sortingHat button calculations
+  $(document).ready(function(){
+    $("#sortingHat").click(function(){
+      // Brute force this like a true programming professional
+      var quest1 = $("input[name='question1']:checked").val();
+      var quest2 = $("input[name='question2']:checked").val();
+      var quest3 = $("input[name='question3']:checked").val();
+      var quest4 = $("input[name='question4']:checked").val();
+      var quest5 = $("input[name='question5']:checked").val();
+      var quest6 = $("input[name='question6']:checked").val();
+      var quest7 = $("input[name='question7']:checked").val();
+      var quest8 = $("input[name='question8']:checked").val();
+      var quest9 = $("input[name='question9']:checked").val();
+      var quest10 = $("input[name='question10']:checked").val();
+      var villageVals = [0,0,0,0]; //Sweet, Savory, Spicy, Bitter
+      villageVals = modifyCount(quest1, "C","B","D","A",villageVals);
+      villageVals = modifyCount(quest2, "A","C","D","B",villageVals);
+      villageVals = modifyCount(quest3, "D","C","A","B",villageVals);
+      villageVals = modifyCount(quest4, "C","D","B","A",villageVals);
+      villageVals = modifyCount(quest5, "B","C","D","A",villageVals);
+      villageVals = modifyCount(quest6, "A","B","C","D",villageVals);
+      villageVals = modifyCount(quest7, "C","B","D","A",villageVals);
+      villageVals = modifyCount(quest8, "A","D","C","B",villageVals);
+      villageVals = modifyCount(quest9, "C","D","B","A",villageVals);
+      villageVals = modifyCount_quest10(quest10, "C","D","B","A",villageVals);
+      
+      // load the bar graph
+      var chart = new CanvasJS.Chart("chartContainer", {
+        title: {
+          text: "Village Results"    
+        },
+        animationEnabled: true,
+        legend: {
+          verticalAlign: "bottom",
+          horizontalAlign: "center"
+        },
+        theme: "theme1",
+        data: [
+        {        
+          type: "column",  
+          dataPoints: [
+          {y: villageVals[0], label: "Sweet"},
+          {y: villageVals[1],  label: "Savory" },
+          {y: villageVals[2],  label: "Spicy"},
+          {y: villageVals[3],  label: "Bitter"},
+          ]
+        }   
+        ]
+      });
+      chart.render();
+    });
+  });
   </script>
 </body>
 </html>
