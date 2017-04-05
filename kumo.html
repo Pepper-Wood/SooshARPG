@@ -42,9 +42,9 @@
         <br>
         <h3>Level and Magic</h3>
         <br>
-        <b>Current Level:</b> 1<br>
+        <b>Current Level:</b> 3<br>
         <b>Prompts Completed:</b> 2<br>
-        <b>Experience Earned:</b> 19 exp.<br>
+        <b>Experience Earned:</b> 57 exp.<br>
         <br>
         <b>Domestic or Combat:</b> Domestic<br>
         <b>Magic Ability:</b> Shoots spider web (yes, like Spiderman)<br>
@@ -165,7 +165,9 @@
         <tr class="bg-tutorial"><th scope="row">#001</th><td>A Hero Is Born</td><td>Be accepted into the SooshARPG for the first time.</td><td>February 2017</td></tr>
         <tr class="bg-tutorial"><th scope="row">#002</th><td>Strike a Cord</td><td>Join the Culario Discord Server.</td><td>February 2017</td></tr>
         <tr class="bg-exclusive"><th scope="row">#003</th><td>The Alpha Dog</td><td>Receive an Early Access Pass to the ARPG.</td><td>February 2017</td></tr>
+        <tr class="bg-quest"><th scope="row">#007</th><td>Soda is my Sweet Prince</td><td>Complete the 'Sleeping Beauty' Alchemy Quest</td><td>March 2017</td></tr>
         <tr class="bg-exclusive"><th scope="row">#018</th><td>What Is Love</td><td>Participate in the 2017 Valentine's Day Prompts.</td><td>February 2017</td></tr>
+        <tr class="bg-exclusive"><th scope="row">#???</th><td>Happy Hobbies</td><td>Participate in the March 2017 Prompt.</td><td>March 2017</td></tr>
         <tr class="bg-lifeskills"><th scope="row">#019</th><td>On The Road to Greatness</td><td>Unlock Rookie Knowledge Milestone in any Life Skill.</td><td>February 2017</td></tr>
       </tbody>
     </table>
@@ -182,12 +184,12 @@
   <script src="js/taffy.js"></script>
   <script>
   $(document).ready(function(){
-    var SWIRL_SEEDS = 32;
+    var SWIRL_SEEDS = 69;
     var stats = TAFFY();
-    stats.insert({"exp":0,"name":"Alchemy","levelID":0});
+    stats.insert({"exp":50,"name":"Alchemy","levelID":0});
     stats.insert({"exp":140,"name":"Angling","levelID":1});
     stats.insert({"exp":0,"name":"Hunting","levelID":0});
-    stats.insert({"exp":295,"name":"Gathering","levelID":1});
+    stats.insert({"exp":320,"name":"Gathering","levelID":1});
     stats.insert({"exp":45,"name":"Mining","levelID":0});
     stats.insert({"exp":0,"name":"Wood-cutting","levelID":0});
     
@@ -198,9 +200,10 @@
     inventory.insert({"quantity":1,"name":"Empty Bottle","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":2,"name":"Funkaberries","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":5,"name":"Hunnie Drops","skill":"Gathering","location":"The Thickets"});
+    inventory.insert({"quantity":2,"name":"Kernel Puffs","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":1,"name":"Kyootie Fish","skill":"Angling","location":"The Thickets"});
     inventory.insert({"quantity":3,"name":"Lemonfish","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":10,"name":"Litter Bits","skill":"Gathering","location":"The Thickets"});
+    inventory.insert({"quantity":13,"name":"Litter Bits","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":4,"name":"Lymons","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":4,"name":"Malloberries","skill":"Gathering","location":"The Thickets"});
     inventory.insert({"quantity":7,"name":"Maglia Flowers","skill":"Gathering","location":"The Thickets"});
