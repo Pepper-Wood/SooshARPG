@@ -12,19 +12,22 @@
 </head>
 <body>
   <ul class="tab">
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'General')" id="defaultOpen">Villager Info</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Skills')">Life Skills Experience</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Inventory')">Inventory</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Crafting')">Crafting</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Prompts')">Prompts</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Achievements')">Achievements</a></li>
-    <li><a href="javascript:void(0)" class="tablinks" onclick="openCity(event, 'Bandana')">Bandana</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'General')" id="defaultOpen">Villager Info</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Skills')">Life Skills Experience</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Inventory')">Inventory</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Crafting')">Crafting</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Prompts')">Prompts</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Achievements')">Achievements</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Bandana')">Bandana</a></li>
+    <li><a href="javascript:void(0)" class="tablinks" onclick="openTab(event, 'Generator')">Generator</a></li>
   </ul>
 
   <div id="General" class="tabcontent">
     <div class="container-fluid">
       <div class="col-md-4">
         <div class="kumoimage"><img src="img/kumo.png"></div>
+        <div id="experienceStatistics"></div>
+        <div id="lifeSkillsMiniStatistics"></div>
       </div>
       <div class="col-md-8">
         <h3>Profile</h3>
@@ -40,11 +43,7 @@
         <a target="_blank" href="http://soosharpg.deviantart.com/"><button type="button" class="btn btn-info">dA Group</button></a>
         <a target="_blank" href="http://soosharpg.weebly.com/"><button type="button" class="btn btn-info">Weebly Site</button></a>
         <br>
-        <h3>Level and Magic</h3>
-        <br>
-        <b>Current Level:</b> 3<br>
-        <b>Prompts Completed:</b> 2<br>
-        <b>Experience Earned:</b> 57 exp.<br>
+        <h3>Magic</h3>
         <br>
         <b>Domestic or Combat:</b> Domestic<br>
         <b>Magic Ability:</b> Shoots spider web (yes, like Spiderman)<br>
@@ -167,14 +166,70 @@
         <tr class="bg-exclusive"><th scope="row">#003</th><td>The Alpha Dog</td><td>Receive an Early Access Pass to the ARPG.</td><td>February 2017</td></tr>
         <tr class="bg-quest"><th scope="row">#007</th><td>Soda is my Sweet Prince</td><td>Complete the 'Sleeping Beauty' Alchemy Quest</td><td>March 2017</td></tr>
         <tr class="bg-exclusive"><th scope="row">#018</th><td>What Is Love</td><td>Participate in the 2017 Valentine's Day Prompts.</td><td>February 2017</td></tr>
-        <tr class="bg-exclusive"><th scope="row">#???</th><td>Happy Hobbies</td><td>Participate in the March 2017 Prompt.</td><td>March 2017</td></tr>
         <tr class="bg-lifeskills"><th scope="row">#019</th><td>On The Road to Greatness</td><td>Unlock Rookie Knowledge Milestone in any Life Skill.</td><td>February 2017</td></tr>
+        <tr class="bg-exclusive"><th scope="row">#029</th><td>Happy Hobbies</td><td>Participate in the March 2017 Prompt.</td><td>March 2017</td></tr>
       </tbody>
     </table>
   </div>
 
   <div id="Bandana" class="tabcontent">
     <a href="#" data-toggle="tooltip" data-placement="bottom" title="Alpha Tester Charm"><img src="img/alpha_tester_charm.png"></a>
+  </div>
+  
+  <div id="Generator" class="tabcontent">
+    <div class="container"><form class="form-horizontal" action="" method="post">
+      <!-- DailyType input-->
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="dailyType">Daily Type</label>
+        <div class="col-md-9">
+          <select id="dailyType" class="form-control">
+            <option value="Angling">Angling</option>
+            <option value="Gathering">Gathering</option>
+            <option value="Hunting">Hunting</option>
+            <option value="Mining">Mining</option>
+            <option value="Wood-cutting">Wood-cutting</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Location input-->
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="locationType">Location</label>
+        <div class="col-md-9">
+          <select id="locationType" class="form-control">
+            <option value="The Thickets">The Thickets</option>
+            <option value="The Midwoods">The Midwoods</option>
+            <option value="The Thorns">The Thorns</option>
+            <option value="The Solitude">Mount Solitude</option>
+            <option value="The Lake of Reflections">Lake of Reflections</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-9 text-right">
+          <button type="button" class="btn btn-primary btn-block" onclick="getDailyText()">Generate Daily</button>
+        </div>
+      </div>
+      
+      <!-- Daily Result textarea -->
+      <div class="form-group">
+        <label class="col-md-3 control-label" for="dailyOutput">Daily Result</label>
+        <div class="col-md-9">
+          <textarea class="form-control" id="dailyOutput" name="message" rows="5"></textarea>
+        </div>
+      </div>
+      
+      <!-- copyToClipboard Button -->
+      <div class="form-group">
+        <div class="col-md-3"></div>
+        <div class="col-md-9 text-right">
+          <button type="button" id="copyToClipboard" class="btn btn-primary btn-sm btn-block">Copy Daily Result to Clipboard</button>
+        </div>
+      </div>
+    </form></div>
   </div>
 
   <!-- Javascript -->
@@ -183,78 +238,130 @@
   <script src="js/modernizr.custom.js"></script>
   <script src="js/taffy.js"></script>
   <script>
+  var SOOSHNAME = "Kumo and Lottie";
+  var EXPERIENCE = 57;
+  var SWIRL_SEEDS = 69;
+  
+  var stats = TAFFY();
+  stats.insert({"exp":50,"name":"Alchemy","levelID":0});
+  stats.insert({"exp":140,"name":"Angling","levelID":1});
+  stats.insert({"exp":0,"name":"Hunting","levelID":0});
+  stats.insert({"exp":320,"name":"Gathering","levelID":1});
+  stats.insert({"exp":45,"name":"Mining","levelID":0});
+  stats.insert({"exp":0,"name":"Wood-cutting","levelID":0});
+  
+  var inventory = TAFFY();
+  inventory.insert({"quantity":2,"name":"Choco Beans","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Crusing' Carp","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Dandepuff","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Empty Bottle","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":2,"name":"Funkaberries","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":5,"name":"Hunnie Drops","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":2,"name":"Kernel Puffs","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Kyootie Fish","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Lemonfish","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":13,"name":"Litter Bits","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":4,"name":"Lymons","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":4,"name":"Malloberries","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":7,"name":"Maglia Flowers","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Molding Clay","skill":"Mining","location":"The Thickets"});
+  inventory.insert({"quantity":6,"name":"Origami Critter","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Peamouse Tail","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":2,"name":"Racing Shell","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Rainbow Yarn","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":2,"name":"Shining Iron","skill":"Mining","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Slippery Sammy","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Smokey Coal","skill":"Mining","location":"The Thickets"});
+  inventory.insert({"quantity":1,"name":"Sour Belly Guppy","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":5,"name":"Sparkling Water","skill":"Gathering","location":"The Thickets"});
+  
+  var expLevels = TAFFY();
+  expLevels.insert({"id":0,"level":"Novice","exp":0,"progress":"danger"});
+  expLevels.insert({"id":1,"level":"Rookie","exp":100,"progress":"warning"});
+  expLevels.insert({"id":2,"level":"Apprentice","exp":500,"progress":"success"});
+  expLevels.insert({"id":3,"level":"Whiz","exp":750,"progress":"info"});
+  expLevels.insert({"id":4,"level":"Genius","exp":1000,"progress":"primary"});
+  expLevels.insert({"id":5,"level":"Master","exp":2500,"progress":"default"});
+  expLevels.insert({"id":6,"level":"Hero","exp":5000,"progress":"default"});
+  
+  var recipes = TAFFY();
+  recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Sparkling Water"});
+  recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Dijon Duck Feather"});
+  recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Magic Powder"});
+  recipes.insert({"recipeID":1,"recipeName":"Hunter's Potion","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
+  recipes.insert({"recipeID":1,"recipeName":"Hunter's Potion","lifeSkillLevel":2,"quantity":2,"name":"Draco Wings"});
+  recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
+  recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":2,"name":"Lymons"});
+  recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":1,"name":"Cader"});
+  recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
+  recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Racing Shell"});
+  recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Cader"});
+  recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":2,"name":"Choco Beans"});
+  recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":1,"name":"Sparkling Water"});
+  recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":1,"name":"Hagis Hide"});
+  recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":3,"name":"Gogi Berries"});
+  recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Peamouse Tail"});
+  recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Glittering Gem"});
+  recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Raspberry Rabbit Foot"});
+  
   $(document).ready(function(){
-    var SWIRL_SEEDS = 69;
-    var stats = TAFFY();
-    stats.insert({"exp":50,"name":"Alchemy","levelID":0});
-    stats.insert({"exp":140,"name":"Angling","levelID":1});
-    stats.insert({"exp":0,"name":"Hunting","levelID":0});
-    stats.insert({"exp":320,"name":"Gathering","levelID":1});
-    stats.insert({"exp":45,"name":"Mining","levelID":0});
-    stats.insert({"exp":0,"name":"Wood-cutting","levelID":0});
-    
-    var inventory = TAFFY();
-    inventory.insert({"quantity":2,"name":"Choco Beans","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Crusing' Carp","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Dandepuff","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Empty Bottle","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":2,"name":"Funkaberries","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":5,"name":"Hunnie Drops","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":2,"name":"Kernel Puffs","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Kyootie Fish","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":3,"name":"Lemonfish","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":13,"name":"Litter Bits","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":4,"name":"Lymons","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":4,"name":"Malloberries","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":7,"name":"Maglia Flowers","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":3,"name":"Molding Clay","skill":"Mining","location":"The Thickets"});
-    inventory.insert({"quantity":6,"name":"Origami Critter","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Peamouse Tail","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":2,"name":"Racing Shell","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Rainbow Yarn","skill":"Gathering","location":"The Thickets"});
-    inventory.insert({"quantity":2,"name":"Shining Iron","skill":"Mining","location":"The Thickets"});
-    inventory.insert({"quantity":3,"name":"Slippery Sammy","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":3,"name":"Smokey Coal","skill":"Mining","location":"The Thickets"});
-    inventory.insert({"quantity":1,"name":"Sour Belly Guppy","skill":"Angling","location":"The Thickets"});
-    inventory.insert({"quantity":5,"name":"Sparkling Water","skill":"Gathering","location":"The Thickets"});
-    
-    var expLevels = TAFFY();
-    expLevels.insert({"id":0,"level":"Novice","exp":0,"progress":"danger"});
-    expLevels.insert({"id":1,"level":"Rookie","exp":100,"progress":"warning"});
-    expLevels.insert({"id":2,"level":"Apprentice","exp":500,"progress":"success"});
-    expLevels.insert({"id":3,"level":"Whiz","exp":750,"progress":"info"});
-    expLevels.insert({"id":4,"level":"Genius","exp":1000,"progress":"primary"});
-    expLevels.insert({"id":5,"level":"Master","exp":2500,"progress":"default"});
-    expLevels.insert({"id":6,"level":"Hero","exp":5000,"progress":"default"});
-    
-    var recipes = TAFFY();
-    recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Sparkling Water"});
-    recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Dijon Duck Feather"});
-    recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Magic Powder"});
-    recipes.insert({"recipeID":1,"recipeName":"Hunter's Potion","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
-    recipes.insert({"recipeID":1,"recipeName":"Hunter's Potion","lifeSkillLevel":2,"quantity":2,"name":"Draco Wings"});
-    recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
-    recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":2,"name":"Lymons"});
-    recipes.insert({"recipeID":2,"recipeName":"Bee's B Gone Potion","lifeSkillLevel":2,"quantity":1,"name":"Cader"});
-    recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Sparkling Water"});
-    recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Racing Shell"});
-    recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":1,"name":"Cader"});
-    recipes.insert({"recipeID":3,"recipeName":"Energy Soda","lifeSkillLevel":2,"quantity":2,"name":"Choco Beans"});
-    recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":1,"name":"Sparkling Water"});
-    recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":1,"name":"Hagis Hide"});
-    recipes.insert({"recipeID":4,"recipeName":"Hero's Brew","lifeSkillLevel":4,"quantity":3,"name":"Gogi Berries"});
-    recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Peamouse Tail"});
-    recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Glittering Gem"});
-    recipes.insert({"recipeID":5,"recipeName":"Hunter's Talisman","lifeSkillLevel":3,"quantity":1,"name":"Raspberry Rabbit Foot"});
-    
+    printExperience();
     printLifeSkillsExperience();
     printInventory();
     printRecipes();
     
+    // helper function for printExperience()
+    function returnEXPPercentageBar(currentLevel, levelCap) {
+      finalString = "<div class='container-fluid'><b>Current Level:</b> ";
+      finalString += currentLevel + "<div class='smallerText'>";
+      finalString += EXPERIENCE + "/" + levelCap + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
+      var percentage = Math.round(100*(EXPERIENCE/levelCap));
+      if (percentage == 0) { finalString += "5"; }
+      else { finalString += percentage; }
+      finalString += "%'>" + percentage + "%</div></div></div>";
+      return finalString;
+    }
+    
+    // function to print out the homepage experience bar
+    function printExperience() {
+      var finalString = "";
+      var currentLevel = "0";
+      if (EXPERIENCE >= 140) {
+        currentLevel = "16-20";
+        finalString = returnEXPPercentageBar(currentLevel, 140);
+      } else if ((EXPERIENCE >= 120) && (EXPERIENCE <= 140)) {
+        currentLevel = "11-15";
+        finalString = returnEXPPercentageBar(currentLevel, 140);
+      } else if ((EXPERIENCE >= 100) && (EXPERIENCE <= 120)) {
+        currentLevel = "6-10";
+        finalString = returnEXPPercentageBar(currentLevel, 120);
+      } else if ((EXPERIENCE >= 80) && (EXPERIENCE <= 100)) {
+        currentLevel = "5";
+        finalString = returnEXPPercentageBar(currentLevel, 100);
+      } else if ((EXPERIENCE >= 60) && (EXPERIENCE <= 80)) {
+        currentLevel = "4";
+        finalString = returnEXPPercentageBar(currentLevel, 80);
+      } else if ((EXPERIENCE >= 40) && (EXPERIENCE <= 60)) {
+        currentLevel = "3";
+        finalString = returnEXPPercentageBar(currentLevel, 60);
+      } else if ((EXPERIENCE >= 30) && (EXPERIENCE <= 40)) {
+        currentLevel = "2";
+        finalString = returnEXPPercentageBar(currentLevel, 40);
+      } else if ((EXPERIENCE >= 0) && (EXPERIENCE <= 30)) {
+        currentLevel = "1";
+        finalString = returnEXPPercentageBar(currentLevel, 30);
+      }
+      document.getElementById("experienceStatistics").innerHTML = finalString;
+    }
+    
     // function to print out the bars with all the life skills experience stats
     function printLifeSkillsExperience() {
       var finalString = "";
+      var miniString = "<center><table class='table table-sm'><tbody><tr>";
+      var miniCounter = 0;
       stats().each(function (lifeSkill) {
+        if (miniCounter == 3) { miniString += "</tr><tr>"; }
+        miniString += "<td><button type='button' class='btn btn-block btn-" + (expLevels({id:lifeSkill.levelID}).first()).progress + "'>" + (expLevels({id:lifeSkill.levelID}).first()).level + " " + lifeSkill.name + "</button></td>";
         finalString += "<div class='container-fluid'><b>" + lifeSkill.name + ":</b> ";
         finalString += (expLevels({id:lifeSkill.levelID}).first()).level + "<div class='smallerText'>";
         var levelCap = (expLevels({id:(lifeSkill.levelID+1)}).first()).exp;
@@ -264,8 +371,11 @@
         if (percentage == 0) { finalString += "5"; }
         else { finalString += percentage; }
         finalString += "%'>" + percentage + "%</div></div></div>";
+        miniCounter += 1;
       });
+      miniString += "</tr></tbody></table></center>";
       document.getElementById("lifeSkillStatistics").innerHTML = finalString;
+      document.getElementById("lifeSkillsMiniStatistics").innerHTML = miniString;
     }
     
     // function to print out the database of inventory items
@@ -319,7 +429,22 @@
   });
   </script>
   <script>
-    function openCity(evt, cityName) {
+    $("#copyToClipboard").click(function(){
+      $("#dailyOutput").select();
+      document.execCommand('copy');
+    });
+    
+    function getDailyText() {
+      var dailyStr = ":devnpconigiri: Daily for ";
+      var today = new Date();
+      dailyStr += (today.getMonth()+1) + "/" + today.getDate() + "/" + (today.getFullYear()%100);
+      dailyStr += ". " + SOOSHNAME + " will go <b>" + document.getElementById("dailyType").value;
+      dailyStr += "</b> in <b>" + document.getElementById("locationType").value + "</b>.";
+      document.getElementById("dailyOutput").innerHTML = dailyStr;
+    }
+  </script>
+  <script>
+    function openTab(evt, cityName) {
       var i, tabcontent, tablinks;
       tabcontent = document.getElementsByClassName("tabcontent");
       for (i = 0; i < tabcontent.length; i++) {
