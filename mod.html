@@ -26,8 +26,9 @@
       <div id="home" class="tab-pane fade in active">
         <h3>Development Log</h3>
         <ul>
-          <li>Add buffs and status effects properly into dailies roller</li>
-          <li>Figure out how this page can be password protected</li>
+          <li>Possibly change the text for buffs when rolled?</li>
+          <li>This code is hella messy with 5 billion if statements. I'm glad an actual programmer besides my friends won't be looking at it to judge me.</li>
+          <li>Figure out how this page can be password protected if possible. Conclusion is probably not.</li>
         </ul>
       </div>
       
@@ -318,19 +319,27 @@
     if (dailyType == "crafting") {
       return "Formal output for crafting not implemented. Refer to results in Debugging output instead.";
     } // KEEP IN HERE UNTIL CRAFTING IS FIGURED OUT
+    var dailyStr;
+    if (dailyType == "hunting") { dailyStr = "Hunting"; }
+    else if (dailyType == "fishing") { dailyStr = "Angling"; }
+    else if (dailyType == "mining") { dailyStr = "Mining"; }
+    else if (dailyType == "woodcutting") { dailyStr = "Wood-Cutting"; }
+    else if (dailyType == "gathering") { dailyStr = "Gathering"; }
+    
     if (loc == "thickets") { loc = "The Thickets"; }
     else if (loc == "midwoods") { loc = "The Midwoods"; }
     else if (loc == "thorns") { loc = "The Thorns"; }
     else if (loc == "solitude") { loc = "Mount Solitude"; }
     else if (loc == "reflections") { loc = "The Lake of Reflections"; }
-    formalStr = "<small>" + sooshName + " went " + dailyType + " in " + loc + ".\n";
+    
+    formalStr = "<small>" + sooshName + " went " + dailyStr + " in " + loc + ".\n";
     if ((quantity == 0) || (item == "ERRORITEM")) {
       formalStr += "Unfortunately they didn’t find anything, maybe next time!"
     } else {
       formalStr += "They managed to find <b>" + quantity.toString() + " " + item + "</b>!\n";
       formalStr += "They are awarded <b>" + getExp(quantity,rarity).toString() + " exp</b>."
     }
-    if (buff != "") { formalStr += "\n[[" + buff + "]]"; }
+    if (buff != "") { formalStr += "\n" + buff; }
     // Unfortunately they received the Lazy Bork Status Infliction.
     formalStr += "</small>";
     return formalStr;
@@ -362,6 +371,7 @@
       finalString += ": ";
       if (result == 1) {
         finalString += "failure and negative debuff";
+        buff = "Unfortunately they received the <b>Lazy Bork Status Infliction</b>.";
       } else if ((result >= 2) && (result <= 8)) {
         finalString += "straight failure";
       } else if ((result >= 9) && (result <= 12)) {
@@ -369,14 +379,16 @@
       } else if ((result >= 13) && (result <= 19)) {
         finalString += "success";
       } else if (result >= 20) {
-        finalString += "success and a buff for the next time they craft";
+        finalString += "success";
+        buff = "They also received the <b>Magic Paws</b> Status Infliction</b>."
       }
     // ------------------------------------------------------------------
     // hunting and fishing
     } else if ((dailyType == "hunting") || (dailyType == "fishing")) {
       result = rollDie(20) + bonus;
       if (result == 1) {
-        buff = "a dizziness debuff";
+        //buff = "[[A DIZZINESS DEBUFF]]";
+        buff = "Unfortunately they received the <b>Lazy Bork Status Infliction</b>."
         // standard failure if between 2 and 6
       } else if ((result >= 7) && (result <= 12)) {
         var DBresults;
@@ -397,19 +409,24 @@
         rarity = "rare";
         quantity = 1;
         item = getItem(DBresults);
-        if (item == "BEES") { buff = "BEES!"; } // special case for BEES status effect
+        if (item == "BEES") {
+          buff = "Unfortunately they received the <b>BEES! Status Infliction</b>.";
+        } // special case for BEES status effect
       } else if (result >= 20) {
         if (dailyType == "fishing") {
-          buff = "a buff for the next time they go fishing";
+          buff = "They also received the <b>Lucky Duck Status Infliction</b>!";
           DBresults = anglingDB({location:loc,rarity:"rare"}).select("name");
         } else {
-          buff = "a buff for the next time they go hunting";
+          buff = "They also received the <b>Lucky Duck Status Infliction</b>!";
           DBresults = huntingDB({location:loc,difficulty:"hard"}).select("name");
         }
         rarity = "rare";
         quantity = 1;
         item = getItem(DBresults);
-        if (item == "BEES") { buff = "BEES!"; } // special case for BEES status effect
+        if (item == "BEES") {
+          //buff = "BEES!";
+          buff = "Unfortunately they received the <b>BEES! Status Infliction</b>.";
+        } // special case for BEES status effect
       }
     // ------------------------------------------------------------------
     // mining and woodcutting
@@ -417,7 +434,7 @@
       result_one = rollDie(20) + bonus;
       result_two = rollDie(20);
       if (result_one == 1) {
-        buff = "a negative debuff";
+        buff = "Unfortunately they received the <b>Lazy Bork Status Infliction</b>.";
         // standard failure if between 2 and 6
       } else if ((result_one >= 7) && (result_one <= 12)) {
         if (dailyType == "mining") { DBresults = miningDB({location:loc,rarity:"common"}).select("name"); }
@@ -436,10 +453,10 @@
         item = getItem(DBresults);
       } else if (result_one >= 20) {
         if (dailyType == "mining") {
-          buff = "positive buff for the next time they go mining";
+          buff = "They also received the <b>Lucky Duck Status Infliction</b>!";
           DBresults = miningDB({location:loc,rarity:"rare"}).select("name");
         } else {
-          buff = "positive buff for the next time they go woodcutting";
+          buff = "They also received the <b>Lucky Duck Status Infliction</b>!";
           DBresults = woodcuttingDB({location:loc,difficulty:"hard"}).select("logName");
         }
         rarity = "rare";
@@ -464,7 +481,7 @@
       result_two = rollDie(6);
       result_three = rollDie(20);
       if (result_one == 1) {
-        buff = "negative debuff";
+        buff = "Unfortunately they received the <b>Lazy Bork Status Infliction</b>.";
         // standard failure if between 2 and 6
       } else if ((result_one >= 7) && (result_one <= 12)) {
         rarity = "common";
@@ -473,7 +490,7 @@
       } else if ((result_one >= 17) && (result_one <= 19)) {
         rarity = "rare";
       } else if (result_one >= 20) {
-        buff = "positive buff for the next time they go gathering";
+        buff = "They also received the <b>Lucky Duck Status Infliction</b>!";
         rarity = "rare";
       }
       if (result_one >= 7) {
