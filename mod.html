@@ -18,7 +18,7 @@
       <li class="active"><a href="#home">Development Log</a></li>
       <li><a href="#menu1">Dailies Roller</a></li>
       <li><a href="#menu2">Village Personality Test</a></li>
-      <li><a href="#menu3">Menu 3</a></li>
+      <li><a href="#menu3">Work in Progress</a></li>
     </ul>
 
     <div class="tab-content">
@@ -29,6 +29,7 @@
           <li>Possibly change the text for buffs when rolled?</li>
           <li>This code is hella messy with 5 billion if statements. I'm glad an actual programmer besides my friends won't be looking at it to judge me.</li>
           <li>Figure out how this page can be password protected if possible. Conclusion is probably not.</li>
+          <li>Currently doing a sooshdatabase description generator, even though one isn't really needed lol</li>
         </ul>
       </div>
       
@@ -269,8 +270,66 @@
       
       <!-- UNKNOWN ===================================================================================== -->
       <div id="menu3" class="tab-pane fade">
-        <h3>Menu 3</h3>
-        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+        <h3>SooshDatabase Description Generator</h3>
+        <form class="form-horizontal" action="" method="post">
+          <!-- Food -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshFood">Food</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="sooshFood">
+            </div>
+          </div>
+          
+          <!-- Type -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshType">Type</label>
+            <div class="col-md-9">
+              <select id="dailyType" class="form-control" onchange="checkForMYO(this.value)">
+                <option value="witchpaws">Official / Witchpaws made</option>
+                <option value="guest">Guest Artist</option>
+                <option value="myo">MYO</option>
+              </select>
+            </div>
+          </div>
+          <!-- Other, for Guest Artist input-->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshTypeOther" id="sooshTypeOtherLabel" style="display:none;">Guest Artist</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="sooshTypeOther" style="display:none;">
+            </div>
+          </div>
+          
+          <!-- Current Owner -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshOwner">Current Owner</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="sooshOwner">
+            </div>
+          </div>
+          
+          <!-- Starting Cost -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshCost">Cost</label>
+            <div class="col-md-9">
+              <input type="text" class="form-control" id="sooshCost">
+              <small id="sooshCostHelp" class="form-text text-muted">This will be used for establishing the appraisal value for Owner History</small>
+            </div>
+          </div>
+          
+          <!-- Build -->
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="sooshBuild">Build</label>
+            <div class="col-md-9">
+              <select id="sooshBuild" class="form-control">
+                <option value="standard">Standard</option>
+                <option value="triptych">Triptych</option>
+                <option value="biheaded">Biheaded</option>
+                <option value="cerberal">Cerberal</option>
+                <option value="cerberal">Sushi Cat</option>
+              </select>
+            </div>
+          </div>
+          <hr>
       </div>
     </div>
   </div>
@@ -282,6 +341,18 @@
   <script src="js/taffy.js"></script>
   <script src="js/DAILIESDB.js"></script>
   <script>
+  // ------------------------------------------------------------------
+  // function to allow user to input the guest artist name
+  function checkForMYO(val){
+   if (val=='guest') {
+     $("#sooshTypeOther").css({'display':'block'});
+     $("#sooshTypeOtherLabel").css({'display':'block'});
+   } else {
+     $("#sooshTypeOther").css({'display':'none'});
+     $("#sooshTypeOtherLabel").css({'display':'none'});
+   }
+  }
+  
   // ------------------------------------------------------------------
   // dice roller helper function
   function rollDie(dieSize) {
@@ -340,9 +411,9 @@
       formalStr += "They are awarded <b>" + getExp(quantity,rarity).toString() + " exp</b>."
     }
     if (buff == "magicpaw") { formalStr += "\nThey also received the <b>Magic Paws Status Infliction</b>. They will gain +1 to their crafting roll tomorrow."; }
-    } else if (buff == "lazybork") { formalStr += "\nUnfortunately they received the <b>Lazy Bork Status Infliction</b>. They will be unable to perform a daily tomorrow."; }
-    } else if (buff == "luckyduck") { formalStr += "\nThey also received the <b>Lucky Duck Status Infliction</b>! They will gain +1 to their daily roll tomorrow."; }
-    } else if (buff == "bees") { formalStr += "\nUnfortunately they received the <b>BEES! Status Infliction</b>. They will get -2 to hunting rolls over the next 2 days."; }
+    else if (buff == "lazybork") { formalStr += "\nUnfortunately they received the <b>Lazy Bork Status Infliction</b>. They will be unable to perform a daily tomorrow."; }
+    else if (buff == "luckyduck") { formalStr += "\nThey also received the <b>Lucky Duck Status Infliction</b>! They will gain +1 to their daily roll tomorrow."; }
+    else if (buff == "bees") { formalStr += "\nUnfortunately they received the <b>BEES! Status Infliction</b>. They will get -2 to hunting rolls over the next 2 days."; }
     // Unfortunately they received the Lazy Bork Status Infliction.
     formalStr += "</small>";
     return formalStr;

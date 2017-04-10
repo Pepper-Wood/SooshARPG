@@ -246,13 +246,14 @@
   stats.insert({"exp":50,"name":"Alchemy","levelID":0});
   stats.insert({"exp":140,"name":"Angling","levelID":1});
   stats.insert({"exp":0,"name":"Hunting","levelID":0});
-  stats.insert({"exp":350,"name":"Gathering","levelID":1});
+  stats.insert({"exp":370,"name":"Gathering","levelID":1});
   stats.insert({"exp":45,"name":"Mining","levelID":0});
   stats.insert({"exp":0,"name":"Wood-cutting","levelID":0});
   
   var inventory = TAFFY();
   inventory.insert({"quantity":2,"name":"Choco Beans","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Crusing' Carp","skill":"Angling","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Draco Wings","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Dandepuff","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Empty Bottle","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":5,"name":"Funkaberries","skill":"Gathering","location":"The Thickets"});
@@ -409,6 +410,7 @@
         recipeString += "<font color='green'>Level Required: " + levelName + "</font><br>";
       } else {
         recipeString += "<font color='red'>Level Required: " + levelName + "</font><br>";
+        recipeFlag = false;
       }
       currentRecipe.each(function (ingredient) {
         var inventoryItem = inventory({name:ingredient.name}).first();
