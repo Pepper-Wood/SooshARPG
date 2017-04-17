@@ -404,7 +404,7 @@
     else if (loc == "reflections") { loc = "The Lake of Reflections"; }
     
     formalStr = "<small>" + sooshName + " went " + dailyStr + " in " + loc + ".\n";
-    if ((quantity == 0) || (item == "ERRORITEM")) {
+    if ((quantity == 0) || (item == "ERRORITEM") || (item == "")) {
       formalStr += "Unfortunately they didn’t find anything, maybe next time!"
     } else {
       formalStr += "They managed to find <b>" + quantity.toString() + " " + item + "</b>!\n";
@@ -463,6 +463,7 @@
       if (result == 1) {
         //buff = "[[A DIZZINESS DEBUFF]]";
         buff = "lazybork";
+      } else if ((result >= 2) && (result <= 6)) {
         // standard failure if between 2 and 6
       } else if ((result >= 7) && (result <= 12)) {
         var DBresults;
@@ -505,6 +506,7 @@
       result_two = rollDie(20);
       if (result_one == 1) {
         buff = "lazybork";
+      } else if ((result_one >= 2) && (result_one <= 6)) {
         // standard failure if between 2 and 6
       } else if ((result_one >= 7) && (result_one <= 12)) {
         if (dailyType == "mining") { DBresults = miningDB({location:loc,rarity:"common"}).select("name"); }
@@ -551,6 +553,7 @@
       result_three = rollDie(20);
       if (result_one == 1) {
         buff = "lazybork";
+      } else if ((result_one >= 2) && (result_one <= 6)) {
         // standard failure if between 2 and 6
       } else if ((result_one >= 7) && (result_one <= 12)) {
         rarity = "common";
