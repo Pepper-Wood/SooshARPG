@@ -53,7 +53,6 @@
         <b>Friends and Family:</b> Unknown<br>
         <b>Rivals and Enemies:</b> Unknown<br>
         <b>Significant Other(s):</b> Unknown<br>
-        <span style="color:#ff0000;">Note: Kumo was boosted to be level 5, but currently just checking that I don't add extra exp to kumo before reconfiguring his new level stats.</span>
       </div>
     </div>
   </div>
@@ -240,37 +239,38 @@
   <script src="js/taffy.js"></script>
   <script>
   var SOOSHNAME = "Kumo and Lottie";
-  var EXPERIENCE = 57;
+  var EXPERIENCE = 157;
   var SWIRL_SEEDS = 69;
   
   var stats = TAFFY();
-  stats.insert({"exp":50,"name":"Alchemy","levelID":0});
-  stats.insert({"exp":140,"name":"Angling","levelID":1});
-  stats.insert({"exp":0,"name":"Hunting","levelID":0});
-  stats.insert({"exp":450,"name":"Gathering","levelID":1});
-  stats.insert({"exp":45,"name":"Mining","levelID":0});
-  stats.insert({"exp":0,"name":"Wood-cutting","levelID":0});
+  stats.insert({"exp":50,"name":"Alchemy"});
+  stats.insert({"exp":140,"name":"Angling"});
+  stats.insert({"exp":0,"name":"Hunting"});
+  stats.insert({"exp":540,"name":"Gathering"});
+  stats.insert({"exp":45,"name":"Mining"});
+  stats.insert({"exp":0,"name":"Wood-cutting"});
   
   var inventory = TAFFY();
-  inventory.insert({"quantity":2,"name":"Choco Beans","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Choco Beans","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Crusing' Carp","skill":"Angling","location":"The Thickets"});
   inventory.insert({"quantity":3,"name":"Draco Wings","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Dandepuff","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Empty Bottle","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":5,"name":"Funkaberries","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":3,"name":"Glittering Stones","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":3,"name":"Golips","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":5,"name":"Hunnie Drops","skill":"Gathering","location":"The Thickets"});
-  inventory.insert({"quantity":2,"name":"Kernel Puffs","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":4,"name":"Kernel Puffs","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Kyootie Fish","skill":"Angling","location":"The Thickets"});
   inventory.insert({"quantity":3,"name":"Lemonfish","skill":"Angling","location":"The Thickets"});
   inventory.insert({"quantity":16,"name":"Litter Bits","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":4,"name":"Lymons","skill":"Gathering","location":"The Thickets"});
-  inventory.insert({"quantity":4,"name":"Malloberries","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":7,"name":"Malloberries","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":7,"name":"Maglia Flowers","skill":"Gathering","location":"The Thickets"});
-  inventory.insert({"quantity":5,"name":"Maglia Pollen","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":8,"name":"Maglia Pollen","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":3,"name":"Molding Clay","skill":"Mining","location":"The Thickets"});
   inventory.insert({"quantity":6,"name":"Origami Critter","skill":"Gathering","location":"The Thickets"});
-  inventory.insert({"quantity":4,"name":"Panboo Sprout","skill":"Gathering","location":"The Thickets"});
+  inventory.insert({"quantity":7,"name":"Panboo Sprout","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":5,"name":"Peamouse Tail","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":2,"name":"Racing Shell","skill":"Gathering","location":"The Thickets"});
   inventory.insert({"quantity":1,"name":"Rainbow Yarn","skill":"Gathering","location":"The Thickets"});
@@ -281,13 +281,35 @@
   inventory.insert({"quantity":7,"name":"Sparkling Water","skill":"Gathering","location":"The Thickets"});
   
   var expLevels = TAFFY();
-  expLevels.insert({"id":0,"level":"Novice","exp":0,"progress":"danger"});
-  expLevels.insert({"id":1,"level":"Rookie","exp":100,"progress":"warning"});
-  expLevels.insert({"id":2,"level":"Apprentice","exp":500,"progress":"success"});
-  expLevels.insert({"id":3,"level":"Whiz","exp":750,"progress":"info"});
-  expLevels.insert({"id":4,"level":"Genius","exp":1000,"progress":"primary"});
-  expLevels.insert({"id":5,"level":"Master","exp":2500,"progress":"default"});
-  expLevels.insert({"id":6,"level":"Hero","exp":5000,"progress":"default"});
+  expLevels.insert({"level":1,"expRequired":0,"runningTotalExpRequired":0});
+  expLevels.insert({"level":2,"expRequired":30,"runningTotalExpRequired":0});
+  expLevels.insert({"level":3,"expRequired":40,"runningTotalExpRequired":30});
+  expLevels.insert({"level":4,"expRequired":60,"runningTotalExpRequired":70});
+  expLevels.insert({"level":5,"expRequired":80,"runningTotalExpRequired":130});
+  expLevels.insert({"level":6,"expRequired":100,"runningTotalExpRequired":230});
+  expLevels.insert({"level":7,"expRequired":100,"runningTotalExpRequired":330});
+  expLevels.insert({"level":8,"expRequired":100,"runningTotalExpRequired":430});
+  expLevels.insert({"level":9,"expRequired":100,"runningTotalExpRequired":530});
+  expLevels.insert({"level":10,"expRequired":100,"runningTotalExpRequired":530});
+  expLevels.insert({"level":11,"expRequired":120,"runningTotalExpRequired":630});
+  expLevels.insert({"level":12,"expRequired":120,"runningTotalExpRequired":750});
+  expLevels.insert({"level":13,"expRequired":120,"runningTotalExpRequired":870});
+  expLevels.insert({"level":14,"expRequired":120,"runningTotalExpRequired":990});
+  expLevels.insert({"level":15,"expRequired":120,"runningTotalExpRequired":1110});
+  expLevels.insert({"level":16,"expRequired":140,"runningTotalExpRequired":1230});
+  expLevels.insert({"level":17,"expRequired":140,"runningTotalExpRequired":1370});
+  expLevels.insert({"level":18,"expRequired":140,"runningTotalExpRequired":1510});
+  expLevels.insert({"level":19,"expRequired":140,"runningTotalExpRequired":1650});
+  expLevels.insert({"level":20,"expRequired":140,"runningTotalExpRequired":1790});
+  
+  var statExpLevels = TAFFY();
+  statExpLevels.insert({"id":0,"level":"Novice","exp":0,"runningTotalExp":0,"progress":"danger"});
+  statExpLevels.insert({"id":1,"level":"Rookie","exp":100,"runningTotalExp":0,"progress":"warning"});
+  statExpLevels.insert({"id":2,"level":"Apprentice","exp":500,"runningTotalExp":100,"progress":"success"});
+  statExpLevels.insert({"id":3,"level":"Whiz","exp":750,"runningTotalExp":600,"progress":"info"});
+  statExpLevels.insert({"id":4,"level":"Genius","exp":1000,"runningTotalExp":1350,"progress":"primary"});
+  statExpLevels.insert({"id":5,"level":"Master","exp":2500,"runningTotalExp":2350,"progress":"default"});
+  statExpLevels.insert({"id":6,"level":"Hero","exp":5000,"runningTotalExp":4850,"progress":"default"});
   
   var recipes = TAFFY();
   recipes.insert({"recipeID":0,"recipeName":"Lucky Duck Potion","lifeSkillLevel":1,"quantity":1,"name":"Sparkling Water"});
@@ -316,11 +338,11 @@
     printRecipes();
     
     // helper function for printExperience()
-    function returnEXPPercentageBar(currentLevel, levelCap) {
+    function returnEXPPercentageBar(currentLevel) {
       finalString = "<div class='container-fluid'><b>Current Level:</b> ";
       finalString += currentLevel + "<div class='smallerText'>";
-      finalString += EXPERIENCE + "/" + levelCap + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
-      var percentage = Math.round(100*(EXPERIENCE/levelCap));
+      finalString += (EXPERIENCE-(expLevels({level:currentLevel}).first()).runningTotalExpRequired) + "/" + (expLevels({level:currentLevel}).first()).expRequired + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-primary progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
+      var percentage = Math.round(100*((EXPERIENCE-(expLevels({level:currentLevel}).first()).runningTotalExpRequired)/(expLevels({level:currentLevel}).first()).expRequired));
       if (percentage == 0) { finalString += "5"; }
       else { finalString += percentage; }
       finalString += "%'>" + percentage + "%</div></div></div>";
@@ -330,33 +352,27 @@
     // function to print out the homepage experience bar
     function printExperience() {
       var finalString = "";
-      var currentLevel = "0";
-      if (EXPERIENCE >= 140) {
-        currentLevel = "16-20";
-        finalString = returnEXPPercentageBar(currentLevel, 140);
-      } else if ((EXPERIENCE >= 120) && (EXPERIENCE <= 140)) {
-        currentLevel = "11-15";
-        finalString = returnEXPPercentageBar(currentLevel, 140);
-      } else if ((EXPERIENCE >= 100) && (EXPERIENCE <= 120)) {
-        currentLevel = "6-10";
-        finalString = returnEXPPercentageBar(currentLevel, 120);
-      } else if ((EXPERIENCE >= 80) && (EXPERIENCE <= 100)) {
-        currentLevel = "5";
-        finalString = returnEXPPercentageBar(currentLevel, 100);
-      } else if ((EXPERIENCE >= 60) && (EXPERIENCE <= 80)) {
-        currentLevel = "4";
-        finalString = returnEXPPercentageBar(currentLevel, 80);
-      } else if ((EXPERIENCE >= 40) && (EXPERIENCE <= 60)) {
-        currentLevel = "3";
-        finalString = returnEXPPercentageBar(currentLevel, 60);
-      } else if ((EXPERIENCE >= 30) && (EXPERIENCE <= 40)) {
-        currentLevel = "2";
-        finalString = returnEXPPercentageBar(currentLevel, 40);
-      } else if ((EXPERIENCE >= 0) && (EXPERIENCE <= 30)) {
-        currentLevel = "1";
-        finalString = returnEXPPercentageBar(currentLevel, 30);
-      }
-      document.getElementById("experienceStatistics").innerHTML = finalString;
+      var finalLvl = 99;
+      expLevels().each(function (expLevel) {
+        if (((EXPERIENCE - expLevel.runningTotalExpRequired) < expLevel.expRequired) && (finalLvl == 99)) {
+          finalLvl = expLevel.level;
+        }
+      });
+      $("#experienceStatistics").html(returnEXPPercentageBar(finalLvl));
+    }
+    
+    // helper function to determine where each skill level resides
+    function getCurrentLevel(lifeskillexp) {
+      var finalid = 99;
+      var expDiff = 0;
+      statExpLevels().each(function (expLvl) {
+        // determine which level the skill is currently at
+        if (((lifeskillexp - expLvl.runningTotalExp) < expLvl.exp) && (finalid == 99)) {
+          finalid = expLvl.id;
+          expDif = lifeskillexp - expLvl.runningTotalExp;
+        }
+      });
+      return [finalid-1,expDif];
     }
     
     // function to print out the bars with all the life skills experience stats
@@ -366,13 +382,14 @@
       var miniCounter = 0;
       stats().each(function (lifeSkill) {
         if (miniCounter == 3) { miniString += "</tr><tr>"; }
-        miniString += "<td><button type='button' class='btn btn-block btn-" + (expLevels({id:lifeSkill.levelID}).first()).progress + "'>" + (expLevels({id:lifeSkill.levelID}).first()).level + " " + lifeSkill.name + "</button></td>";
+        var levelresult = getCurrentLevel(lifeSkill.exp);
+        miniString += "<td><button type='button' class='btn btn-block btn-" + (statExpLevels({id:levelresult[0]}).first()).progress + "'>" + (statExpLevels({id:levelresult[0]}).first()).level + " " + lifeSkill.name + "</button></td>";
         finalString += "<div class='container-fluid'><b>" + lifeSkill.name + ":</b> ";
-        finalString += (expLevels({id:lifeSkill.levelID}).first()).level + "<div class='smallerText'>";
-        var levelCap = (expLevels({id:(lifeSkill.levelID+1)}).first()).exp;
-        finalString += lifeSkill.exp + "/" + levelCap + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-";
-        finalString += (expLevels({id:lifeSkill.levelID}).first()).progress + " progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
-        var percentage = Math.round(100*(lifeSkill.exp/levelCap));
+        finalString += (statExpLevels({id:levelresult[0]}).first()).level + "<div class='smallerText'>";
+        var levelCap = (statExpLevels({id:(levelresult[0]+1)}).first()).exp;
+        finalString += levelresult[1] + "/" + levelCap + " Exp.</div><div class='progress'><div class='progress-bar progress-bar-";
+        finalString += (statExpLevels({id:levelresult[0]}).first()).progress + " progress-bar-striped active' role='progressbar' aria-valuenow='40' aria-valuemin='0' aria-valuemax='100' style='width:";
+        var percentage = Math.round(100*(levelresult[1]/levelCap));
         if (percentage == 0) { finalString += "5"; }
         else { finalString += percentage; }
         finalString += "%'>" + percentage + "%</div></div></div>";
@@ -408,7 +425,7 @@
       var recipeString = ".<span class='tooltip'><span class='top'></span><span class='middle'>";
       var recipeFlag = true; // turns false otherwise
       var currentRecipe = recipes({recipeID:id});
-      var levelName = expLevels({id:recipes({recipeID:id}).first().lifeSkillLevel}).first().level;
+      var levelName = statExpLevels({id:recipes({recipeID:id}).first().lifeSkillLevel}).first().level;
       if (stats({name:"Alchemy"}).first().levelID >= recipes({recipeID:id}).first().lifeSkillLevel) {
         recipeString += "<font color='green'>Level Required: " + levelName + "</font><br>";
       } else {
