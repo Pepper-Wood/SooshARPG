@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>SooshDB Google Sheets</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/materialize.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="container">
+    <h2>SooshDatabase Proof of Concept</h2>
+    <div id="sooshOutput"></div>
+  </div>
+
+  <!-- JavaScripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script src="js/taffy.js"></script>
+  <script type="text/javascript">
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1_h39q-S3s5--R8XmuNfCnQD1rTCeRsxo9p_q1OcquBo/pubhtml';
+
+    $(document).ready( function() {
+      Tabletop.init( { key: public_spreadsheet_url,
+                       callback: showInfo,
+                       wanted: [ "SooshDatabase", "SooshTransactions" ],
+                       debug: true } )
+    $('.showSoosh').click(function() {
+      alert("wow!");
+      //$('.card-reveal').slideToggle('slow');
+    });
+    $('.btntest').click(function() {
+      alert("wow!");
+      //$('.card-reveal').slideToggle('slow');
+    });
+    });
+    
+    function showInfo(data, tabletop) {
+      // PARSE GOOGLE SHEETS INTO TAFFYDB
+      var sooshDatabase = TAFFY();
+      $.each( tabletop.sheets("SooshDatabase").all(), function(i, soosh) {
+        sooshDatabase.insert({"food":soosh.food,
+                              "type":soosh.type,
+                              "url":soosh.url,
+                              "build":soosh.build,
+                              "bandanaType":soosh.bandanaType,
+                              "knotType":soosh.knotType,
+                              "cheekType":soosh.cheekType,
+                              "earType":soosh.earType,
+                              "tailLength":soosh.tailLength,
+                              "tailType":soosh.tailType,
+                              "hairLength":soosh.hairLength,
+                              "wingType":soosh.wingType,
+                              "animalCompanion":soosh.animalCompanion,
+                              "maneFur":soosh.maneFur,
+                              "sparklyFur":soosh.sparklyFur
+        });
+      });
+      var sooshTransactions = TAFFY();
+      $.each( tabletop.sheets("SooshTransactions").all(), function(i, transaction) {
+        sooshTransactions.insert({"food":transaction.food,
+                                  "date":transaction.date,
+                                  "transferTo":transaction.transferTo,
+                                  "transferMethod":transaction.transferMethod,
+                                  "cost":transaction.cost
+        });
+      });
+      // PARSE TAFFYDB FOR RESULTS
+      var sooshOutput = "";
+      sooshDatabase().each(function (soosh) {
+      
+        sooshOutput += "<div class='col-md-3'><div class='card'><div class='card-image waves-effect waves-block waves-light'>";
+        sooshOutput += "<img class='activator' src='" + soosh.url + "'></div><div class='card-content'>";
+        sooshOutput += "<span class='card-title btn btn-block activator'>" + soosh.food + "</span>";
+        sooshOutput += "<p><a href='DATABASEURL'>DATABASEENTRY</a></p></div><div class='card-reveal'>";
+        sooshOutput += "<span class='card-title btn btn-block'>" + soosh.food + "</span>";
+      
+        
+        // Basic Information
+        sooshOutput += "<p>Food: " + soosh.food + "</p>";
+        sooshOutput += "<p>Type: " + soosh.type + "</p>";
+                
+        // Current Owner + Transaction History
+        sooshOutput += "<p>Current Owner: " + sooshTransactions({food:soosh.food}).order("date desc").last().transferTo + "</p>";
+        sooshOutput += "<br>";
+        sooshTransactions({food:soosh.food}).order("date desc").each(function (transaction) {
+          sooshOutput += "<p>" + transaction.date + ": " + transaction.transferMethod + " by " + transaction.transferTo;
+          if (transaction.cost != "") { sooshOutput += " for $" << transaction.cost; }
+          sooshOutput += "</p>";
+        });
+        sooshOutput += "<br>";
+                
+        // Build
+        sooshOutput += "<p>" + soosh.build + " Build</p>";
+        var bandanas = soosh.bandanaType.split(',');
+        if (bandanas.length > 1) {
+          for (i=0; i<bandanas.length; i++) {
+            sooshOutput += "<p>" + bandanas[i] + " Bandana</p>";
+          }
+          sooshOutput += "<p>Multiple Bandanas</p>";
+        } else {
+          sooshOutput += "<p>" + bandanas[0] + " Bandana</p>";
+        }
+        sooshOutput += "<p>" + soosh.knotType + " Knot</p>";
+        sooshOutput += "<p>" + soosh.cheekType + " Cheeks</p>";
+        sooshOutput += "<p>" + soosh.earType + " Ears</p>";
+        sooshOutput += "<p>" + soosh.tailLength + " " + soosh.tailType + " Tail</p>";
+        if (soosh.hairLength != "") { sooshOutput += "<p>" + soosh.hairLength + " Hair</p>"; }
+        if (soosh.wingType != "") { sooshOutput += "<p>" + soosh.wingType + " Wings</p>"; }
+        if (soosh.animalCompanion != "") { sooshOutput += "<p>Animal Companion</p>"; }
+        if (soosh.maneFur != "") { sooshOutput += "<p>Mane Fur</p>"; }
+        if (soosh.sparkleFur != "") { sooshOutput += "<p>Sparkle Fur</p>"; }
+        sooshOutput += "</div></div></div>";
+      });
+      $("#sooshOutput").html(sooshOutput);
+    }
+  </script>
+</body>
+</html>
