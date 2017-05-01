@@ -11,9 +11,10 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <h2>SooshDatabase Proof of Concept</h2>
-    <div id="sooshOutput"></div>
+    <div id="loader"></div>
+    <div id="sooshOutput" class="animate-bottom" style="display:none;"></div>
   </div>
 
   <!-- JavaScripts -->
@@ -26,9 +27,13 @@
     var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1_h39q-S3s5--R8XmuNfCnQD1rTCeRsxo9p_q1OcquBo/pubhtml';
 
     $(document).ready( function() {
+      // generate a random background out of the 4 ones
+      var bgName = "url('img/tilebg" + Math.floor((Math.random() * 4) + 1) + "_small.png')";
+      $("body").css({"background-image":bgName});
+    
       Tabletop.init( { key: public_spreadsheet_url,
                        callback: showInfo,
-                       wanted: [ "SooshDatabase", "SooshTransactions" ],
+                       wanted: [ "SooshDatabase", "SooshTransactions", "SooshBuild" ],
                        debug: true } )
     $('.showSoosh').click(function() {
       alert("wow!");
@@ -46,19 +51,23 @@
       $.each( tabletop.sheets("SooshDatabase").all(), function(i, soosh) {
         sooshDatabase.insert({"food":soosh.food,
                               "type":soosh.type,
-                              "url":soosh.url,
+                              "urlEntry":soosh.urlEntry,
+                              "url":soosh.urlImage,
                               "build":soosh.build,
-                              "bandanaType":soosh.bandanaType,
-                              "knotType":soosh.knotType,
-                              "cheekType":soosh.cheekType,
-                              "earType":soosh.earType,
+                              "buildBonus":soosh.buildBonus,
+                              "bandana":soosh.bandana,
+                              "bandanaBonus":soosh.bandanaBonus,
+                              "knot":soosh.knot,
+                              "cheeks":soosh.cheeks,
+                              "ears":soosh.ears,
                               "tailLength":soosh.tailLength,
-                              "tailType":soosh.tailType,
+                              "tail":soosh.tail,
                               "hairLength":soosh.hairLength,
-                              "wingType":soosh.wingType,
+                              "wingLength":soosh.wingLength,
                               "animalCompanion":soosh.animalCompanion,
+                              "sparkleFur":soosh.sparklyFur,
                               "maneFur":soosh.maneFur,
-                              "sparklyFur":soosh.sparklyFur
+                              "protrusion":soosh.protrusion
         });
       });
       var sooshTransactions = TAFFY();
@@ -70,54 +79,123 @@
                                   "cost":transaction.cost
         });
       });
+      var sooshBuild = TAFFY();
+      $.each( tabletop.sheets("SooshBuild").all(), function(i, attribute) {
+        sooshBuild.insert({"category":attribute.category,
+                           "traitShort":attribute.traitShort,
+                           "traitLong":attribute.traitLong,
+                           "rarity":attribute.rarity,
+        });
+      });
       // PARSE TAFFYDB FOR RESULTS
-      var sooshOutput = "";
-      sooshDatabase().each(function (soosh) {
-      
-        sooshOutput += "<div class='col-md-3'><div class='card'><div class='card-image waves-effect waves-block waves-light'>";
-        sooshOutput += "<img class='activator' src='" + soosh.url + "'></div><div class='card-content'>";
-        sooshOutput += "<span class='card-title btn btn-block activator'>" + soosh.food + "</span>";
-        sooshOutput += "<p><a href='DATABASEURL'>DATABASEENTRY</a></p></div><div class='card-reveal'>";
-        sooshOutput += "<span class='card-title btn btn-block'>" + soosh.food + "</span>";
+      var sooshOutput = "<div class='row'>";
+      var rowCounter = -1;
+      // add row css depending on viewing window
+      var ROW_ENTRIES = 4; // 4 is for desktop viewing
+      if (window.innerWidth <= 800 && window.innerHeight <= 600) { ROW_ENTRIES = 2; } // 2 is for mobile viewing
+      sooshDatabase().order("food asec").each(function (soosh) {
+        rowCounter += 1;
+        if (rowCounter % ROW_ENTRIES == 0) { sooshOutput += "</div><div class='row'>"; }
+        sooshOutput += "<div class='col-xs-6 col-sm-6 col-md-3 col-lg-3'><div class='card'><div class='card-image'>";
+        sooshOutput += "<img class='activator sooshImg' src='" + soosh.url + "'>";
+        sooshOutput += "<a target='_blank' href='" + soosh.urlEntry + "' class='btn-floating halfway-fab waves-effect waves-light red'><span class='glyphicon glyphicon-new-window'></span></a>";
+        sooshOutput += "</div><div class='card-content'>";
+        sooshOutput += "<div class='card-title btn btn-block activator' style='white-space:normal;'>" + soosh.food + "</div>";
+        sooshOutput += "</div><div class='card-reveal'>";
+        sooshOutput += "<div class='card-title btn btn-block' style='white-space:normal;'>" + soosh.food + "</div>";
       
         
         // Basic Information
-        sooshOutput += "<p>Food: " + soosh.food + "</p>";
-        sooshOutput += "<p>Type: " + soosh.type + "</p>";
+        sooshOutput += "<center><h5>Basic Information</h5></center>";
+        sooshOutput += "<table class='table table-hover sooshTable'><tbody>";
+        sooshOutput += "<tr><td>Food</td><td>" + soosh.food + "</td></tr>";
+        if (soosh.type == "official") {  sooshOutput += "<tr><td>Type</td><td>Official / <a target= '_blank' href='http://witchpaws.deviantart.com/'>witchpaws</a> made</td></tr>"; }
+        else if (soosh.type == "MYO") {  sooshOutput += "<tr><td>Type</td><td>MYO</td></tr>"; }
+        else {  sooshOutput += "<tr><td>Type</td><td>Guest Artist <a target= '_blank' href='http://" + soosh.type + ".deviantart.com/'>" + soosh.type + "</a></td></tr>"; }
                 
         // Current Owner + Transaction History
-        sooshOutput += "<p>Current Owner: " + sooshTransactions({food:soosh.food}).order("date desc").last().transferTo + "</p>";
-        sooshOutput += "<br>";
+        sooshOutput += "<tr><td>Current Owner</td><td>" + sooshTransactions({food:soosh.food}).order("date desc").last().transferTo + "</td></tr>";
+        sooshOutput += "</tbody></table>";
+        
+        sooshOutput += "<center><h5>Transaction History</h5></center>";
+        sooshOutput += "<table class='table table-hover sooshTable'><tbody>";
         sooshTransactions({food:soosh.food}).order("date desc").each(function (transaction) {
-          sooshOutput += "<p>" + transaction.date + ": " + transaction.transferMethod + " by " + transaction.transferTo;
-          if (transaction.cost != "") { sooshOutput += " for $" << transaction.cost; }
-          sooshOutput += "</p>";
-        });
-        sooshOutput += "<br>";
-                
-        // Build
-        sooshOutput += "<p>" + soosh.build + " Build</p>";
-        var bandanas = soosh.bandanaType.split(',');
-        if (bandanas.length > 1) {
-          for (i=0; i<bandanas.length; i++) {
-            sooshOutput += "<p>" + bandanas[i] + " Bandana</p>";
+          if (transaction.transferMethod == "purchased") {
+            sooshOutput += "<tr><td>" + transaction.date + "</td><td>Purchased by " + transaction.transferTo;
+          } else {
+            sooshOutput += "<tr><td>" + transaction.date + "</td><td>" + transaction.transferMethod + " to " + transaction.transferTo;
           }
-          sooshOutput += "<p>Multiple Bandanas</p>";
-        } else {
-          sooshOutput += "<p>" + bandanas[0] + " Bandana</p>";
+          if (transaction.cost != "") { sooshOutput += " for $" << transaction.cost; }
+          sooshOutput += "</td></tr>";
+        });
+        sooshOutput += "</tbody></table>";
+        
+        // Build
+        sooshOutput += "<center><h5>Build</h5></center>";
+        sooshOutput += "<table class='table sooshTable'><tbody>";
+        if (soosh.build != "") {
+          sooshOutput += "<tr><td>" + sooshBuild({category:"build",traitShort:soosh.build}).last().traitLong;
+          if (soosh.buildBonus != "") {
+            sooshOutput += " - " + sooshBuild({category:"buildBonus",traitShort:soosh.buildBonus}).last().traitLong + "</td></tr>";
+          }
+          sooshOutput +=  "</td></tr>";
         }
-        sooshOutput += "<p>" + soosh.knotType + " Knot</p>";
-        sooshOutput += "<p>" + soosh.cheekType + " Cheeks</p>";
-        sooshOutput += "<p>" + soosh.earType + " Ears</p>";
-        sooshOutput += "<p>" + soosh.tailLength + " " + soosh.tailType + " Tail</p>";
-        if (soosh.hairLength != "") { sooshOutput += "<p>" + soosh.hairLength + " Hair</p>"; }
-        if (soosh.wingType != "") { sooshOutput += "<p>" + soosh.wingType + " Wings</p>"; }
-        if (soosh.animalCompanion != "") { sooshOutput += "<p>Animal Companion</p>"; }
-        if (soosh.maneFur != "") { sooshOutput += "<p>Mane Fur</p>"; }
-        if (soosh.sparkleFur != "") { sooshOutput += "<p>Sparkle Fur</p>"; }
+        if (soosh.bandana != "") {
+          var bandanas = (soosh.bandana).split(",");
+          if (bandanas.length > 1) {
+            for (i=0; i<bandanas.length; i++) {
+              sooshOutput += "<tr><td class='" + sooshBuild({category:"bandana",traitShort:bandanas[i]}).last().rarity + "Build'>" + sooshBuild({category:"bandana",traitShort:bandanas[i]}).last().traitLong + "</td></tr>";
+            }
+            if (soosh.build != "triptych") {
+              sooshOutput += "<tr><td class='rareBuild'>Multiple Bandanas</td></tr>";
+            }
+          } else {
+            sooshOutput += "<tr><td class='" + sooshBuild({category:"bandana",traitShort:bandanas[0]}).last().rarity + "Build'>" + sooshBuild({category:"bandana",traitShort:bandanas[0]}).last().traitLong + "</td></tr>";
+          }
+        }
+        if (soosh.bandanaBonus != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"bandanaBonus",traitShort:soosh.bandanaBonus}).last().rarity + "Build'>" + sooshBuild({category:"bandanaBonus",traitShort:soosh.bandanaBonus}).last().traitLongs + "</td></tr>"; }
+        if (soosh.knot != "") {
+          var knots = (soosh.knot).split(",");
+          if (knots.length > 1) {
+            for (i=0; i<knots.length; i++) {
+              sooshOutput += "<tr><td class='" + sooshBuild({category:"knot",traitShort:knots[i]}).last().rarity + "Build'>" + sooshBuild({category:"knot",traitShort:knots[i]}).last().traitLong + "</td></tr>";
+            }
+          } else {
+            sooshOutput += "<tr><td class='" + sooshBuild({category:"knot",traitShort:knots[0]}).last().rarity + "Build'>" + sooshBuild({category:"knot",traitShort:knots[0]}).last().traitLong + "</td></tr>";
+          }
+        }
+        if (soosh.cheeks != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"cheeks",traitShort:soosh.cheeks}).last().rarity + "Build'>" + sooshBuild({category:"cheeks",traitShort:soosh.cheeks}).last().traitLong + "</td></tr>"; }
+        if (soosh.ears != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"ears",traitShort:soosh.ears}).last().rarity + "Build'>" + sooshBuild({category:"ears",traitShort:soosh.ears}).last().traitLong + "</td></tr>"; }
+        
+        if (soosh.tail != "") {
+          var tailRarity;
+          var tailRarity1 = sooshBuild({category:"tail",traitShort:soosh.tail}).last().rarity;
+          var tailRarity2 = sooshBuild({category:"tailLength",traitShort:soosh.tailLength}).last().rarity;
+          if ((tailRarity1 == "exclusive") || (tailRarity2 == "exclusive")) { tailRarity = "exclusive"; }
+          if ((tailRarity1 == "rare") || (tailRarity2 == "rare")) { tailRarity = "rare"; }
+          if ((tailRarity1 == "uncommon") || (tailRarity2 == "uncommon")) { tailRarity = "uncommon"; }
+          else { tailRarity = "common"; }
+          sooshOutput += "<tr><td class='" + tailRarity + "Build'>";
+          if (soosh.tailLength != "") {
+            sooshOutput += sooshBuild({category:"tailLength",traitShort:soosh.tailLength}).last().traitLong + " ";
+          }
+          sooshOutput += sooshBuild({traitShort:soosh.tail}).last().traitLong + "</td></tr>";
+        }
+        if (soosh.hairLength != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"hairLength",traitShort:soosh.hairLength}).last().rarity + "Build'>" + sooshBuild({category:"hairLength",traitShort:soosh.hairLength}).last().traitLong + "</td></tr>"; }
+        if (soosh.wingLength != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"wingLength",traitShort:soosh.wingLength}).last().rarity + "Build'>" + sooshBuild({category:"wingLength",traitShort:soosh.wingLength}).last().traitLong + "</td></tr>"; }
+        if (soosh.animalCompanion != "") { sooshOutput += "<tr><td class='rareBuild'>Animal Companion</td></tr>"; }
+        if (soosh.sparkleFur != "") { sooshOutput += "<tr><td class='rareBuild'>Sparkle Fur</td></tr>"; }
+        if (soosh.maneFur != "") { sooshOutput += "<tr><td class='rareBuild'>Mane Fur</td></tr>"; }
+        if (soosh.protrusion != "") { sooshOutput += "<tr><td class='" + sooshBuild({category:"protrusion",traitShort:soosh.protrusion}).last().rarity + "Build'>" + sooshBuild({category:"protrusion",traitShort:soosh.protrusion}).last().traitLong + "</td></tr>"; }
+        sooshOutput += "</tbody></table>";
+        
         sooshOutput += "</div></div></div>";
       });
+      // get rid of loader and replace with content
+      sooshOutput += "</div>";
+      $("#loader").css({"display":"none"});
       $("#sooshOutput").html(sooshOutput);
+      $("#sooshOutput").css({"display":"block"});
     }
   </script>
 </body>
