@@ -472,21 +472,21 @@
         rarity = "common";
         quantity = 1;
         item = getItem(DBresults);
+        if (item == "BEES") { buff = "bees"; } // special case for BEES status effect
       } else if ((result >= 13) && (result <= 16)) {
         if (dailyType == "fishing") { DBresults = anglingDB({location:loc,rarity:"uncommon"}).select("name"); }
         else { DBresults = huntingDB({location:loc,difficulty:"medium"}).select("name"); }
         rarity = "uncommon";
         quantity = 1;
         item = getItem(DBresults);
+        if (item == "BEES") { buff = "bees"; } // special case for BEES status effect
       } else if ((result >= 17) && (result <= 19)) {
         if (dailyType == "fishing") { DBresults = anglingDB({location:loc,rarity:"rare"}).select("name"); }
         else { DBresults = huntingDB({location:loc,difficulty:"hard"}).select("name"); }
         rarity = "rare";
         quantity = 1;
         item = getItem(DBresults);
-        if (item == "BEES") {
-          buff = "bees";
-        } // special case for BEES status effect
+        if (item == "BEES") { buff = "bees"; } // special case for BEES status effect
       } else if (result >= 20) {
         buff = "luckyduck";
         if (dailyType == "fishing") {
