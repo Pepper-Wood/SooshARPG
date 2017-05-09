@@ -337,7 +337,7 @@
   <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/canvasjs.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script src="js/taffy.js"></script>
   <script src="js/DAILIESDB.js"></script>
   <script>
@@ -670,30 +670,33 @@
       villageVals = modifyCount(quest9, "C","D","B","A",villageVals);
       villageVals = modifyCount_quest10(quest10, "C","D","B","A",villageVals);
       
-      // load the bar graph
-      var chart = new CanvasJS.Chart("chartContainer", {
-        title: {
-          text: "Village Results"    
-        },
-        animationEnabled: true,
-        legend: {
-          verticalAlign: "bottom",
-          horizontalAlign: "center"
-        },
-        theme: "theme1",
-        data: [
-        {        
-          type: "column",  
-          dataPoints: [
-          {y: villageVals[0], label: "Sweet"},
-          {y: villageVals[1],  label: "Savory" },
-          {y: villageVals[2],  label: "Spicy"},
-          {y: villageVals[3],  label: "Bitter"},
-          ]
-        }   
-        ]
+      
+      google.charts.load("current", {packages:['corechart']});
+      google.charts.setOnLoadCallback(function() {
+        var data = google.visualization.arrayToDataTable([
+          ["Village", "Count", { role: "style" } ],
+          ["Sweet", villageVals[0], "#FB73CB"],
+          ["Savory", villageVals[1], "#ECEB42"],
+          ["Spicy", villageVals[2], "#FB6E74"],
+          ["Bitter", villageVals[3], "#38DA38"]
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+                         { calc: "stringify",
+                           sourceColumn: 1,
+                           type: "string",
+                           role: "annotation" },
+                         2]);
+        var options = {
+          title: "Village Results",
+          'height':500,
+          bar: {groupWidth: "95%"},
+          legend: { position: "none" },
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("chartContainer"));
+        chart.draw(view, options);
       });
-      chart.render();
     });
   });
   </script>

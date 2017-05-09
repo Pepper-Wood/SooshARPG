@@ -125,7 +125,7 @@ gatheringDB.insert({"id":79,"name":"Powerless Crystal","description":"Filled wit
 gatheringDB.insert({"id":80,"name":"Stardust Pouch","description":"Not actually made from stardust.","type":"miscellaneous","rarity":"rare","location":"mount solitude"});
 gatheringDB.insert({"id":81,"name":"Empty Bottle","description":"Filled with endless possibilities.","type":"treasures","rarity":"uncommon","location":"thickets"});
 gatheringDB.insert({"id":82,"name":"Origami Critter","description":"A friendly reminder that we all come in different shapes and sizes.","type":"treasures","rarity":"uncommon","location":"thickets"});
-gatheringDB.insert({"id":83,"name":"Cleanse Bread","description":"Some think it to be a fallen bead from Inekami's Neclace.","type":"treasures","rarity":"rare","location":"thickets"});
+gatheringDB.insert({"id":83,"name":"Cleanse Bead","description":"Some think it to be a fallen bead from Inekami's Neclace.","type":"treasures","rarity":"rare","location":"thickets"});
 gatheringDB.insert({"id":84,"name":"Dream Catcher","description":"A sacred ward against nightmares,","type":"treasures","rarity":"uncommon","location":"midwoods"});
 gatheringDB.insert({"id":85,"name":"Misplaced Key","description":"Whelp, another inconvenience fee.","type":"treasures","rarity":"uncommon","location":"midwoods"});
 gatheringDB.insert({"id":86,"name":"Celestial Note","description":"Experts cannot agree if it's a G or D sharp.","type":"treasures","rarity":"rare","location":"midwoods"});
