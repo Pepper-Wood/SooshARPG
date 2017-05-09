@@ -399,7 +399,11 @@
       if (inventoryItem.quantity >= ingredient.quantity) {
         recipeString += "<font color='green'>" + inventoryItem.quantity + "/" + ingredient.quantity + " " + ingredient.name + "</font><br>";
       } else {
-        recipeString += "<font color='red'>0/" + ingredient.quantity + " " + ingredient.name + "</font><br>";
+        if (inventoryItem.quantity > 0) {
+          recipeString += "<font color='red'>" + inventoryItem.quantity + "/" + ingredient.quantity + " " + ingredient.name + "</font><br>";
+        } else {
+          recipeString += "<font color='red'>0/" + ingredient.quantity + " " + ingredient.name + "</font><br>";
+        }
         recipeFlag = false;
       }
     });
