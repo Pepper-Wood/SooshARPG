@@ -9,6 +9,8 @@
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="css/kumo.css" />
+  <link rel="stylesheet" type="text/css" href="css/inventory.css" />
+  <link rel="stylesheet" type="text/css" href="css/tooltip.css" />
 </head>
 <body>
   <div id="loadingOverlay" class="loading">Loading&#8230;</div>
@@ -105,6 +107,7 @@
         <tr class="bg-exclusive"><th scope="row">#029</th><td>Happy Hobbies (2017)</td><td>Participate in the March 2017 Prompt.</td><td>March 2017</td></tr>
         <tr class="bg-exclusive"><th scope="row">#030</th><td>Hear My Alpha Bark</td><td>Complete the Alpha Tester Survey</td><td>February 2017</td></tr>
         <tr class="bg-exclusive"><th scope="row">#031</th><td>Spring Has Sprung (2017)</td><td>Participate in the 2017 Spring Has Sprung Prompt.</td><td>April 2017</td></tr>
+        <tr class="bg-exclusive"><th scope="row">#032</th><td>Meet The Pack (2017)</td><td>Participate in the 2017 Meet The Pack Prompt.</td><td>May 2017</td></tr>
       </tbody>
     </table>
   </div>
@@ -222,6 +225,7 @@
     });
     $.each( tabletop.sheets("allItems").all(), function(i, entry) {
       allItems.insert({"name":entry.name,
+                       "imgUrl":entry.imgUrl,
                        "lifeSkill":entry.lifeSkill,
                        "description":entry.description,
                        "type":entry.type,
@@ -281,12 +285,22 @@
     stats.insert({"exp":parseInt(InitStats({key:"Wood-Cutting EXP"}).last().value),"name":"Wood-cutting"});
     printExperience();
     printLifeSkillsExperience();
-    printInventory();
+    <!-- printInventory(); -->
+    printNewInventory();
     printRecipes();
     printPrompts();
     
     var containerEl = document.querySelector('.promptsContainer');
     var mixer = mixitup(containerEl);
+    
+    // hover for items in inventory
+    $(".inventoryItem").mousemove(function(e) {
+      $(this).children(".inventoryTooltip").css({'left':e.pageX + 10,'top':e.pageY + 10,'display':'block'});
+    });
+    $(".inventoryItem").mouseout(function() { 
+      $(this).children(".inventoryTooltip").css('display', 'none');
+    });
+    
     
     $("#loadingOverlay").css({'display':'none'});
   }
@@ -367,6 +381,33 @@
       }
     });
     finalString += "</tbody></table>";
+    $("#inventoryInner").html(finalString);
+  }
+  
+  // -------------------------------------------------------------------------------
+  // function that now prints out the inventory as a fancy video game inventory with images
+  function printNewInventory() {  
+    var finalString = "<div class='container-fluid'><div class='row'>";
+    Inventory().order("name desc"); // sort in alphabetical order
+    Inventory().each(function (inventItem) {
+      if (inventItem.quantity > 0) {
+        finalString += "<div class='col-md-1 col-sm-4'><div class='inventoryItem'><div class='card radius shadowDepth1'><div class='card__image border-tlr-radius'>";
+        if (allItems({name:inventItem.name}).last().imgUrl == "") {
+          finalString += "<img class='card-img-top' src='https://www.hobby.dn.ua/images/user_foto/avatar/64x64.gif'>";
+        } else {
+          finalString += "<img class='card-img-top' src='" + allItems({name:inventItem.name}).last().imgUrl + "'>";
+        }
+        finalString += "<div class='cardQuantity'>" + inventItem.quantity + "</div></div></div>";
+        finalString += "<div class='inventoryTooltip'><table class='table'><tbody>";
+        finalString += "<tr><td>Name</td><td>" + allItems({name:inventItem.name}).last().name + "</td></tr>";
+        finalString += "<tr><td>Type</td><td>" + allItems({name:inventItem.name}).last().type + "</td></tr>";
+        finalString += "<tr><td>Rarity</td><td>" + allItems({name:inventItem.name}).last().rarity + "</td></tr>";
+        finalString += "<tr><td>Location</td><td>" + allItems({name:inventItem.name}).last().location + "</td></tr>";
+        finalString += "<tr><td colspan='2'>" + allItems({name:inventItem.name}).last().description + "</td></tr>";
+        finalString += "</tbody></table></div></div></div>";        
+      }
+    });
+    finalString += "</div></div>";
     $("#inventoryInner").html(finalString);
   }
   

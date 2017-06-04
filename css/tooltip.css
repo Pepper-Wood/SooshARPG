@@ -1,0 +1,8 @@
+.inventoryItem .inventoryTooltip {
+  position: fixed; /** depends on how it handles the e.pageX and e.pageY **/
+  background-color: rgba(0,0,0,0.7);
+  z-index: 10;
+  display: none; /**let the tooltip be not visable, when startup **/
+  border-radius: 10px;
+  color: #fff;
+}
