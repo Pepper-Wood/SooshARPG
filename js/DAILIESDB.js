@@ -39,6 +39,7 @@ huntingDB.insert({"id":13,"name":"Haggishog","description":"A delicacy among kil
 huntingDB.insert({"id":14,"name":"Bubbling Turtle","description":"A great pal during bath time adventures!","difficulty":"medium","location":"mount solitude"});
 huntingDB.insert({"id":15,"name":"Wise Moo","description":"This beef gets straight A's!","difficulty":"medium","location":"mount solitude"});
 huntingDB.insert({"id":16,"name":"Limerelk","description":"It's radiance is blinding. No wonder it can't be found.","difficulty":"hard","location":"mount solitude"});
+huntingDB.insert({"id":17,"name":"Lunar Moth","description":"Only found at night under the Full Moon.","difficulty":"hard","location":"thickets"});
 
 // GATHERING DATABASE
 // id, name, description, type, rarity, location

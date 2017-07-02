@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Visual Trade Center</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/materialize_trade.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="container-fluid">
+    <h2 style="text-align:center;background-color:rgba(255,255,255,0.7);border-radius:10px">Visual Trade Center</h2>
+    <div id="loader"></div>
+    <div id="sooshOutput" class="animate-bottom" style="display:none;"></div>
+  </div>
+
+  <!-- JavaScripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script src="js/taffy.js"></script>
+  <script type="text/javascript">
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1H2KbU3vP8l03VNP-x8fcB9T7nEXyTo12qCsYHcrp3dY/pubhtml';
+
+    $(document).ready( function() {
+      // generate a random background out of the 4 ones
+      var bgName = "url('img/tilebg2_small.png')";
+      $("body").css({"background-image":bgName});
+
+      Tabletop.init( { key: public_spreadsheet_url,
+                       callback: showInfo,
+                       simpleSheet: true } )
+    });
+
+    function showInfo(data, tabletop) {
+      // PARSE GOOGLE SHEETS INTO TAFFYDB
+      var tradeCenter = TAFFY();
+      $.each( tabletop.sheets("Sheet1").all(), function(i, soosh) {
+        tradeCenter.insert({"sooshName":soosh.sooshName,
+                              "imgUrl":soosh.imgUrl,
+                              "lookingFor":soosh.lookingFor,
+                              "seeking":soosh.seeking,
+                              "journalLink":soosh.journalLink,
+                              "removeDate":soosh.removeDate,
+        });
+      });
+
+      // PARSE TAFFYDB FOR RESULTS
+      var sooshOutput = "<div class='row'>";
+      var rowCounter = -1;
+      // add row css depending on viewing window
+      var ROW_ENTRIES = 4; // 4 is for desktop viewing
+      if (window.innerWidth <= 800 && window.innerHeight <= 600) { ROW_ENTRIES = 2; } // 2 is for mobile viewing
+      tradeCenter().order("sooshName asec").each(function (soosh) {
+        rowCounter += 1;
+        if (rowCounter % ROW_ENTRIES == 0) { sooshOutput += "</div><div class='row'>"; }
+        sooshOutput += "<div class='col-xs-6 col-sm-6 col-md-3 col-lg-3'><div class='card'><div class='card-image'>";
+        sooshOutput += "<img class='sooshImg' src='" + soosh.imgUrl + "'>";
+        sooshOutput += "<a target='_blank' href='" + soosh.journalLink +"'><button type='button' class='btn btn-info' style='position:absolute;top:0px;right:0px;'><span class='glyphicon glyphicon-new-window'></span></button></a>";
+        sooshOutput += "<div style='position:absolute;top:0px;left:0px;'>"
+        if ((soosh.lookingFor).includes("sale")) { sooshOutput += "<button type='button' class='btn btn-danger'>Sale</button>"; }
+        if ((soosh.lookingFor).includes("trade")) { sooshOutput += "<button type='button' class='btn btn-success'>Trade</button>"; }
+        if ((soosh.lookingFor).includes("contest")) { sooshOutput += "<button type='button' class='btn btn-primary'>Contest</button>"; }
+        sooshOutput += "</div></div>";
+        sooshOutput += "<p style='text-align:center'>" + soosh.seeking + "</p>";
+        sooshOutput += "</div></div>";
+      });
+      // get rid of loader and replace with content
+      sooshOutput += "</div>";
+      $("#loader").css({"display":"none"});
+      $("#sooshOutput").html(sooshOutput);
+      $("#sooshOutput").css({"display":"block"});
+    }
+  </script>
+</body>
+</html>
