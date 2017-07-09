@@ -52,6 +52,7 @@
       var tradeCenter = TAFFY();
       $.each( tabletop.sheets("Sheet1").all(), function(i, soosh) {
         tradeCenter.insert({"sooshName":soosh.sooshName,
+                              "masterlistUrl":soosh.masterlistUrl,
                               "imgUrl":soosh.imgUrl,
                               "lookingFor":soosh.lookingFor,
                               "seeking":soosh.seeking,
@@ -82,7 +83,7 @@
         if ((soosh.lookingFor).includes("trade")) { sooshOutput += "<button type='button' class='btn btn-success'>Trade</button>"; }
         if ((soosh.lookingFor).includes("contest")) { sooshOutput += "<button type='button' class='btn btn-primary'>Contest</button>"; }
         sooshOutput += "</div></div></a>";
-        sooshOutput += "<div style='padding:0px 5px 5px 5px;padding-right:5px;'><b style='font-size:20px'>" + soosh.sooshName + "</b><br><b>Looking For:</b> " + soosh.seeking + "</div>";
+        sooshOutput += "<div style='padding:0px 5px 5px 5px;padding-right:5px;'><b style='font-size:20px'><a target='_blank' href='" + soosh.masterlistUrl + "'>" + soosh.sooshName + "</a></b><br><b>Looking For:</b> " + soosh.seeking + "</div>";
         sooshOutput += "</div></div>";
       });
       // get rid of loader and replace with content
