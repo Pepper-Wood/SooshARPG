@@ -38,12 +38,12 @@
 }
 
 @-webkit-keyframes animatebottom {
-  from { bottom:-100px; opacity:0 } 
+  from { bottom:-100px; opacity:0 }
   to { bottom:0px; opacity:1 }
 }
 
-@keyframes animatebottom { 
-  from{ bottom:-100px; opacity:0 } 
+@keyframes animatebottom {
+  from{ bottom:-100px; opacity:0 }
   to{ bottom:0; opacity:1 }
 }
 
@@ -69,3 +69,9 @@ body {
 .uncommonBuild { background-color: #BD84FE; }
 .rareBuild { background-color: #FF82DE; }
 .exclusiveBuild { background-color: #FE5F60; }
+
+.checkboxWrapper {
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #000;
+}
