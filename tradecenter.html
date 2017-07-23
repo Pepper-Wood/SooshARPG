@@ -8,56 +8,131 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/materialize_trade.css">
-  <link rel="stylesheet" href="css/main.css">
-  <style>
-    .informationPanel {
-      padding: 5px;
-      background-color: #fff;
-      border-radius: 2px;
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    }
-  </style>
+  <link rel="stylesheet" href="css/newtradecenter.css">
 </head>
 <body>
-  <div class="container-fluid">
-    <h2 style="text-align:center;background-color:rgba(255,255,255,0.7);border-radius:10px">Visual Trade Center</h2>
-    <div class="row">
-      <span class="informationPanel">White BG indicates an approved listing on the <a target="_blank" href="http://sushidogs.deviantart.com/journal/Trade-Center-547532152">Sushidogs Trade Center</a></span>
-      <span class="informationPanel" style="background-color:#ffe082">Yellow BG indicates this listing is not officially recognized yet by the Sushidog group. Be careful in the event these trades are scams.</span>
+  <div class="container" style="background-color:rgba(255,255,255,0.7);min-height:1000px">
+    <h2 style="text-align:center;border-radius:10px">Visual Trade Center</h2>
+    <div class="container">
+      <div class="row">
+        <p>White BG indicates an approved listing on the <a target="_blank" href="http://sushidogs.deviantart.com/journal/Trade-Center-547532152">Sushidogs Trade Center</a></p>
+        <p>Yellow BG indicates this listing is not officially recognized yet by the Sushidog group. Be careful in the event these trades are scams.</p>
+      </div>
     </div>
 
-    <div class="row">
-      <span class="checkboxWrapper"><input type="checkbox" class="filled-in" id="wp_checkbox" /><label for="wp_checkbox">Witchpaws Sushi Dogs</label></span>
-      <span class="checkboxWrapper"><input type="checkbox" class="filled-in" id="nonwp_checkbox" /><label for="nonwp_checkbox">MYO/Guest Sushi Dogs</label></span>
-      <span class="checkboxWrapper"><input type="checkbox" class="filled-in" id="sale_checkbox" /><label for="sale_checkbox">Sale</label></span>
-      <span class="checkboxWrapper"><input type="checkbox" class="filled-in" id="trade_checkbox" /><label for="trade_checkbox">Trade</label></span>
-      <span class="checkboxWrapper"><input type="checkbox" class="filled-in" id="contest_checkbox" /><label for="contest_checkbox">Contest</label></span>
-      <button type="button" id="filterButton" class="btn btn-success">Add Filter</button>
+    <div class="container" style="margin-bottom: 10px;">
+      <div class="row">
+        <div class="btn-group">
+          <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="typeMenuButton">
+              	Filter Type By <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" id="typeMenu">
+                <li><a href="#witchpaws">Witchpaws/SpikedPeach</a></li>
+                <li><a href="#other">Offical Guest Artist / MYO</a></li>
+                <li class="divider"></li>
+                <li><a href="#allTypes">All Types</a></li>
+              </ul>
+          </div>
+          <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="offerMenuButton">
+              	<span id="search_concept_offer">Filter Offers By</span> <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" id="offerMenu">
+                <li><a href="#trade" style="color: #5cb85c">Trade</a></li>
+                <li><a href="#swap" style="color: #5cb85c">Soosh Swaps Only</a></li>
+                <li><a href="#sale" style="color: #d9534f">Sale</a></li>
+                <li><a href="#contest" style="color: #337ab7">Contest</a></li>
+                <li class="divider"></li>
+                <li><a href="#allOffers">All Offers</a></li>
+              </ul>
+          </div>
+          <button class="btn btn-info" type="button" id="filterButton"><span class="glyphicon glyphicon-search"></span> Search</button>
+        </div>
+      </div>
     </div>
 
+    <div id="loaderBG"></div>
     <div id="loader"></div>
-    <div id="sooshOutput" class="animate-bottom" style="display:none;"></div>
+    <div id="sooshOutput" style="display:none;"></div>
   </div>
 
   <!-- JavaScripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <script type="text/javascript" src="js/tabletop.js"></script>
   <script src="js/taffy.js"></script>
   <script type="text/javascript">
     var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1H2KbU3vP8l03VNP-x8fcB9T7nEXyTo12qCsYHcrp3dY/pubhtml';
+    // -----------------------------------------------------------------------------------------------------------------------
+    function printSooshFlag(wp_userFlag, wp_sooshFlag, nonwp_userFlag, nonwp_sooshFlag, sale_userFlag, sale_sooshFlag, trade_userFlag, trade_sooshFlag, swap_userFlag, swap_sooshFlag, contest_userFlag, contest_sooshFlag) {
+      if (wp_userFlag) { // user wants a wp soosh
+        if (!wp_sooshFlag) { return false; } // but this is not a wp soosh
+        else { // and this is a wp soosh
+          if (sale_userFlag) { // user also wants wps for sale
+            if (sale_sooshFlag) { return true; }
+            else { return false; }
+          } else if (trade_userFlag) { // user also wants wps for trade
+            if (trade_sooshFlag) { return true; }
+            else { return false; }
+          } else if (swap_userFlag) {
+            if (swap_sooshFlag) { return true; }
+            else { return false; }
+          } else if (contest_userFlag) { // user also wants wps for contest
+            if (contest_sooshFlag) { return true; }
+            else { return false; }
+          } else { return true; } // user doesn't want second filter
+        }
+      } else if (nonwp_userFlag) { // user wants a non-wp soosh
+        if (!nonwp_sooshFlag) { return false; } // but this is not a nonwp soosh
+        else { // and this is a wp soosh
+          if (sale_userFlag) { // user also wants nonwps for sale
+            if (sale_sooshFlag) { return true; }
+            else { return false; }
+          } else if (trade_userFlag) { // user also wants nonwps for trade
+            if (trade_sooshFlag) { return true; }
+            else { return false; }
+          } else if (swap_userFlag) {
+            if (swap_sooshFlag) { return true; }
+            else { return false; }
+          } else if (contest_userFlag) { // user also wants nonwps for contest
+            if (contest_sooshFlag) { return true; }
+            else { return false; }
+          } else { return true; } // user doesn't want second filter
+        }
+      } else {
+        if (sale_userFlag) {
+          if (sale_sooshFlag) { return true; }
+          else { return false; }
+        } else if (trade_userFlag) {
+          if (trade_sooshFlag) { return true; }
+          else { return false; }
+        } else if (swap_userFlag) {
+          if (swap_sooshFlag) { return true; }
+          else { return false; }
+        } else if (contest_userFlag) {
+          if (contest_sooshFlag) { return true; }
+          else { return false; }
+        } else { return true; }
+      }
+    }
 
     // -----------------------------------------------------------------------------------------------------------------------
     $(document).ready( function() {
-      // generate a random background out of the 4 ones
-      var bgName = "url('img/tilebg2_small.png')";
-      $("body").css({"background-image":bgName});
-
       Tabletop.init( { key: public_spreadsheet_url,
                        callback: showInfo,
-                       simpleSheet: true } )
+                       simpleSheet: true } );
+
+      $("#typeMenu li a").click(function(){
+        $("#typeMenuButton").text($(this).text());
+        $("#typeMenuButton").val($(this).text());
+        $("#typeMenuButton").css("background-color","#ffecb3");
+      });
+      $("#offerMenu li a").click(function(){
+        $("#offerMenuButton").text($(this).text());
+        $("#offerMenuButton").val($(this).text());
+        $("#offerMenuButton").css("background-color","#ffecb3");
+      });
     });
 
     // -----------------------------------------------------------------------------------------------------------------------
@@ -70,6 +145,7 @@
                              "masterlistUrl":soosh.masterlistUrl,
                              "imgUrl":soosh.imgUrl,
                              "lookingFor":soosh.lookingFor,
+                             "swap":soosh.swap,
                              "seeking":soosh.seeking,
                              "journalLink":soosh.journalLink,
                              "removeDate":soosh.removeDate,
@@ -78,53 +154,54 @@
       });
 
       // OUTPUT FLAGS
-      var wp_check = $("#wp_checkbox").is(':checked');
-      var nonwp_check = $("#nonwp_checkbox").is(':checked');
-      var sale_check = $("#sale_checkbox").is(':checked');
-      var trade_check = $("#trade_checkbox").is(':checked');
-      var contest_check = $("#contest_checkbox").is(':checked');
+      var wp_check = ($("#typeMenuButton").val() == "Witchpaws/SpikedPeach");
+      var nonwp_check = ($("#typeMenuButton").val() == "Offical Guest Artist / MYO");
+      var sale_check = ($("#offerMenuButton").val() == "Sale");
+      var trade_check = ($("#offerMenuButton").val() == "Trade");
+      var swap_check = ($("#offerMenuButton").val() == "Soosh Swaps Only");
+      var contest_check = ($("#offerMenuButton").val() == "Contest");
 
       // PARSE TAFFYDB FOR RESULTS
       var sooshOutput = "<div class='row'>";
-      var rowCounter = -1;
       // add row css depending on viewing window
-      var ROW_ENTRIES = 4; // 4 is for desktop viewing
-      if (window.innerWidth <= 800 && window.innerHeight <= 600) { ROW_ENTRIES = 2; } // 2 is for mobile viewing
       tradeCenter().order("sooshName asec").each(function (soosh) {
-        if ((wp_check && ((soosh.wp).includes("x")))
-          || (nonwp_check && !((soosh.wp).includes("x")))
-          || (sale_check && ((soosh.lookingFor).includes("sale")))
-          || (trade_check && ((soosh.lookingFor).includes("trade")))
-          || (contest_check && ((soosh.lookingFor).includes("contest")))
-          || (!wp_check && !nonwp_check && !sale_check && !trade_check && !contest_check)  ) {
-          rowCounter += 1;
-          if (rowCounter % ROW_ENTRIES == 0) { sooshOutput += "</div><div class='row'>"; }
-          sooshOutput += "<div class='col-xs-6 col-sm-6 col-md-3 col-lg-3'>";
-          if ((soosh.official).includes("no")) { sooshOutput += "<div class='card' style='background-color:#ffe082'>"; }
-          else { sooshOutput += "<div class='card'>"; }
+        // print this soosh if user wants wp and this is wp soosh AND user wants contest and this soosh is contest
+        if (printSooshFlag(wp_check, ((soosh.wp).includes("x")), nonwp_check, (!((soosh.wp).includes("x"))), sale_check, ((soosh.lookingFor).includes("sale")), trade_check, ((soosh.lookingFor).includes("trade")), swap_check, ((soosh.swap).includes("x")), contest_check, ((soosh.lookingFor).includes("contest")))) {
+          sooshOutput += "<div class='col-xs-6 col-md-3 reducedPadding'>";
+          if ((soosh.official).includes("no")) { sooshOutput += "<div class='sooshCard' style='background-color:#ffe082'>"; }
+          else { sooshOutput += "<div class='sooshCard'>"; }
           sooshOutput += "<a target='_blank' href='" + soosh.journalLink +"'>";
-          if ((soosh.official).includes("no")) { sooshOutput += "<div class='card-image' style='background-color:#ffe082'>"; }
-          else { sooshOutput += "<div class='card-image'>"; }
-          sooshOutput += "<img class='sooshImg' src='" + soosh.imgUrl + "'>";
+          if ((soosh.official).includes("no")) { sooshOutput += "<div class='sooshImg'>"; }
+          else { sooshOutput += "<div class='sooshImg'>"; }
+          sooshOutput += "<img class='object-fit_contain' src='" + soosh.imgUrl + "'>";
           sooshOutput += "<div style='position:absolute;top:0px;left:0px;'>"
           if ((soosh.lookingFor).includes("sale")) { sooshOutput += "<button type='button' class='btn btn-danger'>Sale</button>"; }
           if ((soosh.lookingFor).includes("trade")) { sooshOutput += "<button type='button' class='btn btn-success'>Trade</button>"; }
           if ((soosh.lookingFor).includes("contest")) { sooshOutput += "<button type='button' class='btn btn-primary'>Contest</button>"; }
-          sooshOutput += "</div></div></a>";
-          sooshOutput += "<div style='padding:0px 5px 5px 5px;padding-right:5px;'><b style='font-size:20px'><a target='_blank' href='" + soosh.masterlistUrl + "'>" + soosh.sooshName + "</a></b><br><b>Looking For:</b> " + soosh.seeking + "</div>";
+          //sooshOutput += "<p style='position:absolute;bottom:0px;left:0px;'><b><a target='_blank' href='" + soosh.masterlistUrl + "'>" + soosh.sooshName + "</a></b></p>";
+          sooshOutput += "</div><div class='description'>";
+          if ((soosh.masterlistUrl).includes("UNLISTED")) {
+            sooshOutput += "<a href=''><p class='description_content' style='background-color: #ff0000;'>" + soosh.sooshName + "</p></a>";
+          } else {
+            sooshOutput += "<a target='_blank' class='sooshDatabaseURL' href='" + soosh.masterlistUrl + "'><p class='description_content'>" + soosh.sooshName + "</p></a>";
+          }
+          sooshOutput += "<p class='lookingFor_content'><b>LF:</b> " + soosh.seeking + "</p></div>";
+          sooshOutput += "</div></a>";
           sooshOutput += "</div></div>";
         }
       });
       // get rid of loader and replace with content
       sooshOutput += "</div>";
-      $("#loader").css({"display":"none"});
+      $("#loaderBG").fadeOut();
+      $("#loader").toggle();
       $("#sooshOutput").html(sooshOutput);
-      $("#sooshOutput").css({"display":"block"});
+      $("#sooshOutput").fadeIn();
     }
 
     // -----------------------------------------------------------------------------------------------------------------------
     $( "#filterButton" ).click(function() {
-      $("#loader").css({"display":"inline"});
+      $("#loaderBG").toggle();
+      $("#loader").toggle();
       Tabletop.init( { key: public_spreadsheet_url,
                        callback: showInfo,
                        simpleSheet: true } )
