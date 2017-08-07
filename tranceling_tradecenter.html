@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Visual Trade Center</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/newtradecenter.css">
+  <style>
+  body {
+    background-image: url(http://orig15.deviantart.net/15f0/f/2017/146/1/5/heavens_grace_bg_by_iionheartd-dbakg2l.png);
+  }
+  </style>
+</head>
+<body>
+  <div class="container" style="background-color:rgba(255,255,255,0.7);min-height:1000px">
+    <h2 style="text-align:center;border-radius:10px">Visual Trade Center</h2>
+    <div class="container">
+      <div class="row">
+        <p>A tranceling with a red name indicates that this tranceling is not in the <a target="_blank" href="http://mask-archive.deviantart.com">Mask-Archive</a>.</p>
+      </div>
+    </div>
+
+    <div id="loaderBG"></div>
+    <div id="loader"></div>
+    <div id="trancelingOutput" style="display:none;"></div>
+  </div>
+
+  <!-- JavaScripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script src="js/taffy.js"></script>
+  <script type="text/javascript">
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1HXxuK2BKtfD_qwKnMsAqHti9ZC4cLvYyBnkt2L5D4OM/pubhtml';
+    // -----------------------------------------------------------------------------------------------------------------------
+    $(document).ready( function() {
+      Tabletop.init( { key: public_spreadsheet_url,
+                       callback: showInfo,
+                       simpleSheet: true } );
+    });
+
+    // -----------------------------------------------------------------------------------------------------------------------
+    function showInfo(data, tabletop) {
+      // PARSE GOOGLE SHEETS INTO TAFFYDB
+      var tradeCenter = TAFFY();
+      $.each( tabletop.sheets("Sheet1").all(), function(i, trank) {
+        tradeCenter.insert({ "tranceDesigner":trank.tranceDesigner,
+                             "tranceName":trank.tranceName,
+                             "masterlistUrl":trank.masterlistUrl,
+                             "imgUrl":trank.imgUrl,
+                             "lookingFor":trank.lookingFor,
+                             "swap":trank.swap,
+                             "seeking":trank.seeking,
+                             "journalLink":trank.journalLink
+        });
+      });
+
+      // PARSE TAFFYDB FOR RESULTS
+      var trancelingOutput = "<div class='row'>";
+      // add row css depending on viewing window
+      tradeCenter().order("tranceName asec").each(function (tranceling) {
+        trancelingOutput += "<div class='col-xs-6 col-md-3 reducedPadding'>";
+        trancelingOutput += "<div class='sooshCard'>";
+        trancelingOutput += "<a target='_blank' href='" + tranceling.journalLink +"'>";
+        trancelingOutput += "<div class='sooshImg'>";
+        trancelingOutput += "<img class='object-fit_contain' src='" + tranceling.imgUrl + "'>";
+        trancelingOutput += "<div style='position:absolute;top:0px;left:0px;'>"
+        if ((tranceling.lookingFor).includes("sale")) { trancelingOutput += "<button type='button' class='btn btn-danger'>Sale</button>"; }
+        if ((tranceling.lookingFor).includes("trade")) { trancelingOutput += "<button type='button' class='btn btn-success'>Trade</button>"; }
+        if ((tranceling.lookingFor).includes("contest")) { trancelingOutput += "<button type='button' class='btn btn-primary'>Contest</button>"; }
+        trancelingOutput += "</div><div class='description'>";
+        if ((tranceling.masterlistUrl).includes("unlisted")) {
+          trancelingOutput += "<a href=''><p class='description_content' style='background-color: #ff0000;'>" + tranceling.tranceName + "</p></a>";
+        } else {
+          trancelingOutput += "<a target='_blank' class='sooshDatabaseURL' href='" + tranceling.masterlistUrl + "'><p class='description_content'>" + tranceling.tranceName + "</p></a>";
+        }
+        trancelingOutput += "<p class='lookingFor_content'><b>LF:</b> " + tranceling.seeking + "</p></div>";
+        trancelingOutput += "</div></a>";
+        trancelingOutput += "</div></div>";
+      });
+      // get rid of loader and replace with content
+      trancelingOutput += "</div>";
+      $("#loaderBG").fadeOut();
+      $("#loader").toggle();
+      $("#trancelingOutput").html(trancelingOutput);
+      $("#trancelingOutput").fadeIn();
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------------
+    $( "#filterButton" ).click(function() {
+      $("#loaderBG").toggle();
+      $("#loader").toggle();
+      Tabletop.init( { key: public_spreadsheet_url,
+                       callback: showInfo,
+                       simpleSheet: true } )
+    });
+  </script>
+</body>
+</html>

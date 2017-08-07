@@ -17,6 +17,7 @@
       <div class="row">
         <p>White BG indicates an approved listing on the <a target="_blank" href="http://sushidogs.deviantart.com/journal/Trade-Center-547532152">Sushidogs Trade Center</a></p>
         <p>Yellow BG indicates this listing is not officially recognized yet by the Sushidog group. Be careful in the event these trades are scams.</p>
+        <p>Red soosh food name indicates that this soosh is not in the <a target="_blank" href="http://sooshdatabase.deviantart.com">SooshDatabase</a>. These sooshes are valid sushidogs and just need to be put on the sooshDatabase before a trade can occur.</p>
       </div>
     </div>
 
@@ -69,51 +70,27 @@
       if (wp_userFlag) { // user wants a wp soosh
         if (!wp_sooshFlag) { return false; } // but this is not a wp soosh
         else { // and this is a wp soosh
-          if (sale_userFlag) { // user also wants wps for sale
-            if (sale_sooshFlag) { return true; }
-            else { return false; }
-          } else if (trade_userFlag) { // user also wants wps for trade
-            if (trade_sooshFlag) { return true; }
-            else { return false; }
-          } else if (swap_userFlag) {
-            if (swap_sooshFlag) { return true; }
-            else { return false; }
-          } else if (contest_userFlag) { // user also wants wps for contest
-            if (contest_sooshFlag) { return true; }
-            else { return false; }
+          if (sale_userFlag) { return sale_sooshFlag;
+          } else if (trade_userFlag) { return trade_sooshFlag;
+          } else if (swap_userFlag) { return swap_sooshFlag;
+          } else if (contest_userFlag) { return contest_sooshFlag;
           } else { return true; } // user doesn't want second filter
         }
       } else if (nonwp_userFlag) { // user wants a non-wp soosh
         if (!nonwp_sooshFlag) { return false; } // but this is not a nonwp soosh
         else { // and this is a wp soosh
-          if (sale_userFlag) { // user also wants nonwps for sale
-            if (sale_sooshFlag) { return true; }
-            else { return false; }
-          } else if (trade_userFlag) { // user also wants nonwps for trade
-            if (trade_sooshFlag) { return true; }
-            else { return false; }
-          } else if (swap_userFlag) {
-            if (swap_sooshFlag) { return true; }
-            else { return false; }
-          } else if (contest_userFlag) { // user also wants nonwps for contest
-            if (contest_sooshFlag) { return true; }
-            else { return false; }
+          if (sale_userFlag) { return sale_sooshFlag;
+          } else if (trade_userFlag) { return trade_sooshFlag;
+          } else if (swap_userFlag) { return swap_sooshFlag;
+          } else if (contest_userFlag) { return contest_sooshFlag;
           } else { return true; } // user doesn't want second filter
         }
       } else {
-        if (sale_userFlag) {
-          if (sale_sooshFlag) { return true; }
-          else { return false; }
-        } else if (trade_userFlag) {
-          if (trade_sooshFlag) { return true; }
-          else { return false; }
-        } else if (swap_userFlag) {
-          if (swap_sooshFlag) { return true; }
-          else { return false; }
-        } else if (contest_userFlag) {
-          if (contest_sooshFlag) { return true; }
-          else { return false; }
-        } else { return true; }
+        if (sale_userFlag) { return sale_sooshFlag;
+        } else if (trade_userFlag) { return trade_sooshFlag;
+        } else if (swap_userFlag) { return swap_sooshFlag;
+        } else if (contest_userFlag) { return contest_sooshFlag;
+        } else { return true; } // user doesn't want second filter
       }
     }
 
