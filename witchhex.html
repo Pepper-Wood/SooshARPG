@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Visual Trade Center</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/witchhextradecenter.css">
+  <style>
+  body {
+    background-image: url(https://orig03.deviantart.net/68e9/f/2013/285/1/4/nebula_custom_box_background__2_by_missships_a_lot-d6q64yz.png);
+  }
+  </style>
+</head>
+<body>
+  <div class="container" style="background-color:rgba(243, 248, 239, 0.9);min-height:1000px">
+    <h2 style="text-align:center;border-radius:10px">WitchHex's Visual Trade Center</h2>
+    <div class="container">
+      <div class="row">
+        <p>White BG indicates an approved listing on the <a target="_blank" href="http://sushidogs.deviantart.com/journal/Trade-Center-547532152">Sushidogs Trade Center</a></p>
+        <p>Yellow BG indicates this listing is not officially recognized yet by the Sushidog group. Be careful in the event these trades are scams.</p>
+        <p>Red soosh food name indicates that this soosh is not in the <a target="_blank" href="http://sooshdatabase.deviantart.com">SooshDatabase</a>. These sooshes are valid sushidogs and just need to be put on the sooshDatabase before a trade can occur.</p>
+      </div>
+    </div>
+
+    <div id="loaderBG"></div>
+    <div id="loader"></div>
+    <div id="sooshOutput" style="display:none;"></div>
+  </div>
+
+  <!-- JavaScripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/tabletop.js"></script>
+  <script src="js/taffy.js"></script>
+  <script type="text/javascript">
+    var public_spreadsheet_url = 'https://docs.google.com/spreadsheets/d/1C_NS8abHpznnDSOxha-yMjsPgklfdYqiJrHOn_LHlp0/pubhtml';
+
+    // -----------------------------------------------------------------------------------------------------------------------
+    $(document).ready( function() {
+      Tabletop.init( { key: public_spreadsheet_url,
+                       callback: showInfo,
+                       simpleSheet: true } );
+    });
+
+    // -----------------------------------------------------------------------------------------------------------------------
+    function showInfo(data, tabletop) {
+      console.log(data);
+      // PARSE GOOGLE SHEETS INTO TAFFYDB
+      var tradeCenter = TAFFY();
+      $.each( tabletop.sheets("Sheet1").all(), function(i, soosh) {
+        tradeCenter.insert({ "creatorType":soosh.creatorType,
+                             "sooshType":soosh.sooshType,
+                             "sooshName":soosh.SooshName,
+                             "masterlistUrl":soosh.MasterlistURL,
+                             "imgUrl":soosh.ImgURL,
+                             "available":soosh.AvailableYN,
+                             "official":soosh.OfficialYN,
+                             "swap":soosh.Swap,
+                             "lookingFor":soosh.LookingFor,
+                             "seeking":soosh.Seeking,
+                             "journal Link":soosh.JournalLink
+        });
+      });
+      // PARSE TAFFYDB FOR RESULTS
+      var sooshOutput = "<div class='row'>";
+      // add row css depending on viewing window
+      tradeCenter().order("sooshName asec").each(function (soosh) {
+        console.log(soosh);
+          sooshOutput += "<div class='col-xs-6 col-md-3 reducedPadding'>";
+          //if ((soosh.available).includes("N")) { sooshOutput += "<div class='sooshCard' style='background-color:#ffe082'>"; }
+          //else { sooshOutput += "<div class='sooshCard'>"; }
+          sooshOutput += "<div class='sooshCard'>";
+          sooshOutput += "<div class='sooshImg'>";
+          sooshOutput += "<img class='object-fit_contain' src='" + soosh.imgUrl + "'>";
+          sooshOutput += "</div><div class='description'>";
+          sooshOutput += "<a href='" + soosh.masterlistUrl + "'><p class='description_content'>" + soosh.sooshName + "; " + soosh.sooshType + "; " + soosh.creatorType + "</p></a>";
+          sooshOutput += "</div>";
+          sooshOutput += "</div></div>";
+      });
+      // get rid of loader and replace with content
+      sooshOutput += "</div>";
+      $("#loaderBG").fadeOut();
+      $("#loader").toggle();
+      $("#sooshOutput").html(sooshOutput);
+      $("#sooshOutput").fadeIn();
+    }
+  </script>
+</body>
+</html>
